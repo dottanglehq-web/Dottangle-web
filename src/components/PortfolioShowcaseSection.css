@@ -1,0 +1,1138 @@
+/* ==========================================================================
+   PORTFOLIO SHOWCASE SECTION — DAYLIGHT LUXURY SPECIFICATION
+   Inspired by Reference: https://follishitechsolutions.org/
+   ========================================================================== */
+
+.portfolio-showcase-section {
+  position: relative;
+  background-color: #FAFAF9;
+  padding: 120px 0 130px;
+  overflow: hidden;
+  border-top: 1px solid rgba(15, 23, 42, 0.06);
+  border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+}
+
+/* Ambient Diffuse Daylight Glows */
+.ps-ambient-backdrop {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.ps-glow-shape {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.55;
+  will-change: transform;
+}
+
+.ps-glow-peach {
+  width: 480px;
+  height: 480px;
+  top: -80px;
+  left: 5%;
+  background: radial-gradient(circle, rgba(254, 205, 195, 0.6) 0%, transparent 70%);
+}
+
+.ps-glow-lavender {
+  width: 440px;
+  height: 440px;
+  top: 15%;
+  right: 8%;
+  background: radial-gradient(circle, rgba(221, 207, 252, 0.6) 0%, transparent 70%);
+}
+
+.ps-glow-mint {
+  width: 420px;
+  height: 420px;
+  bottom: 5%;
+  left: 20%;
+  background: radial-gradient(circle, rgba(199, 245, 220, 0.5) 0%, transparent 70%);
+}
+
+.ps-glow-sky {
+  width: 460px;
+  height: 460px;
+  bottom: -60px;
+  right: 15%;
+  background: radial-gradient(circle, rgba(191, 219, 254, 0.6) 0%, transparent 70%);
+}
+
+/* --------------------------------------------------------------------------
+   Container & Header
+   -------------------------------------------------------------------------- */
+.ps-container {
+  position: relative;
+  z-index: 2;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.ps-header {
+  max-width: 860px;
+  margin: 0 auto 54px;
+}
+
+.ps-section-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(124, 58, 237, 0.08);
+  border: 1px solid rgba(124, 58, 237, 0.18);
+  color: #6D28D9;
+  padding: 7px 18px;
+  border-radius: 9999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.ps-badge-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: #7C3AED;
+  box-shadow: 0 0 10px #7C3AED;
+  animation: psPulse 2s infinite ease-in-out;
+}
+
+@keyframes psPulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.35); opacity: 0.6; }
+}
+
+.ps-main-title {
+  font-size: clamp(2.3rem, 4.4vw, 3.8rem);
+  font-weight: 800;
+  color: #0F172A;
+  letter-spacing: -0.035em;
+  line-height: 1.15;
+  margin: 0 0 18px;
+}
+
+.ps-break-desktop {
+  display: block;
+}
+
+.ps-subhead {
+  font-size: clamp(1rem, 1.2vw, 1.14rem);
+  color: #475569;
+  line-height: 1.65;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+/* --------------------------------------------------------------------------
+   4 Large Showcase Cards Grid (1 Row on Desktop)
+   -------------------------------------------------------------------------- */
+.ps-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
+  align-items: stretch;
+}
+
+/* Base Card Monolith */
+.ps-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 28px;
+  padding: 24px 22px 22px;
+  min-height: 580px;
+  cursor: pointer;
+  outline: none;
+  border: 1.5px solid transparent;
+  box-shadow: 0 12px 36px -8px rgba(15, 23, 42, 0.07);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.4s ease;
+  will-change: transform;
+}
+
+/* Daylight Pastel Background Themes */
+.card-peach {
+  background: linear-gradient(180deg, #FFF1EE 0%, #FEE5DF 100%);
+  border-color: rgba(244, 63, 94, 0.14);
+}
+.card-peach:hover {
+  border-color: rgba(244, 63, 94, 0.45);
+  box-shadow: 0 24px 50px -10px rgba(244, 63, 94, 0.22);
+}
+
+.card-lavender {
+  background: linear-gradient(180deg, #F6F1FE 0%, #EDE4FA 100%);
+  border-color: rgba(139, 92, 246, 0.14);
+}
+.card-lavender:hover {
+  border-color: rgba(139, 92, 246, 0.45);
+  box-shadow: 0 24px 50px -10px rgba(139, 92, 246, 0.22);
+}
+
+.card-mint {
+  background: linear-gradient(180deg, #EEF9F3 0%, #DEF3E7 100%);
+  border-color: rgba(16, 185, 129, 0.14);
+}
+.card-mint:hover {
+  border-color: rgba(16, 185, 129, 0.45);
+  box-shadow: 0 24px 50px -10px rgba(16, 185, 129, 0.22);
+}
+
+.card-sky {
+  background: linear-gradient(180deg, #F0F6FF 0%, #E0EEFF 100%);
+  border-color: rgba(2, 132, 199, 0.14);
+}
+.card-sky:hover {
+  border-color: rgba(2, 132, 199, 0.45);
+  box-shadow: 0 24px 50px -10px rgba(2, 132, 199, 0.22);
+}
+
+/* Card Top: Title & Arrow Action */
+.ps-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.ps-card-title {
+  margin: 0;
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: #0F172A;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+}
+
+.ps-title-regular {
+  font-family: var(--font-sans);
+  font-weight: 800;
+}
+
+.ps-title-italic {
+  font-style: italic;
+  font-weight: 500;
+  color: #1E293B;
+  margin-left: 2px;
+}
+
+.ps-card-arrow-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  color: #0F172A;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ps-card:hover .ps-card-arrow-btn {
+  background: #0F172A;
+  color: #FFFFFF;
+  transform: rotate(45deg) scale(1.08);
+  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.2);
+}
+
+/* --------------------------------------------------------------------------
+   Card Center: Project Preview Stage & Mockups
+   -------------------------------------------------------------------------- */
+.ps-preview-stage {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px 0 20px;
+  min-height: 290px;
+}
+
+/* Floating Live Metric Overlay Chips */
+.ps-floating-chip {
+  position: absolute;
+  bottom: 8px;
+  right: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(15, 23, 42, 0.88);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #FFFFFF;
+  padding: 5px 11px;
+  border-radius: 9999px;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+  transition: transform 0.3s ease;
+}
+
+.ps-card:hover .ps-floating-chip {
+  transform: translateY(-4px) scale(1.04);
+}
+
+.ps-chip-pulse {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #10B981;
+  box-shadow: 0 0 8px #10B981;
+}
+
+/* 1. Web Development Browser Frame Mockup */
+.ps-mockup-browser {
+  width: 100%;
+  max-width: 285px;
+  background: #11141E;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 16px 36px -6px rgba(15, 23, 42, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ps-card:hover .ps-mockup-browser {
+  transform: translateY(-6px) scale(1.03);
+}
+
+.ps-browser-chrome {
+  background: #0D0F17;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.ps-chrome-dots {
+  display: flex;
+  gap: 5px;
+}
+
+.ps-chrome-dots .dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+.dot-red { background: #FF5F56; }
+.dot-yellow { background: #FFBD2E; }
+.dot-green { background: #27C93F; }
+
+.ps-chrome-url {
+  background: rgba(255, 255, 255, 0.06);
+  padding: 2px 10px;
+  border-radius: 4px;
+  color: #94A3B8;
+  font-size: 9.5px;
+  font-family: var(--font-mono);
+  flex: 1;
+  text-align: center;
+}
+
+.ps-browser-viewport {
+  padding: 18px 14px;
+  color: #FFFFFF;
+}
+
+.ps-browser-hero {
+  text-align: left;
+  margin-bottom: 14px;
+}
+
+.ps-browser-tagline {
+  font-size: 13.5px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, #FFFFFF 0%, #94A3B8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.ps-browser-subtag {
+  font-size: 10.5px;
+  color: #F43F5E;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  margin-top: 2px;
+}
+
+.ps-browser-body {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.ps-browser-team-box {
+  width: 60px;
+  height: 52px;
+  border-radius: 6px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.ps-browser-team-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ps-browser-meta {
+  flex: 1;
+}
+
+.ps-browser-pill {
+  display: inline-block;
+  font-size: 8px;
+  text-transform: uppercase;
+  color: #38BDF8;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  margin-bottom: 2px;
+}
+
+.ps-browser-p {
+  font-size: 9.5px;
+  color: #94A3B8;
+  line-height: 1.35;
+  margin: 0;
+}
+
+/* 2. Digital Marketing Flyer Mockup */
+.ps-mockup-flyer {
+  width: 100%;
+  max-width: 275px;
+  height: 290px;
+  background: #FFFFFF;
+  border-radius: 18px;
+  border: 3px solid #E11D48;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 16px 36px -6px rgba(225, 29, 72, 0.25);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 16px 14px 12px;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ps-card:hover .ps-mockup-flyer {
+  transform: translateY(-6px) rotate(-1deg) scale(1.03);
+}
+
+.ps-flyer-waves {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.12;
+}
+
+.ps-wave {
+  position: absolute;
+  width: 200%;
+  height: 90px;
+  border-radius: 50%;
+  background: #E11D48;
+}
+.wave-1 { top: -30px; left: -50%; }
+.wave-2 { bottom: -20px; right: -50%; }
+
+.ps-flyer-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+}
+
+.ps-flyer-kicker {
+  display: block;
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #1E293B;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.ps-flyer-price-badge {
+  background: linear-gradient(135deg, #FF2E74 0%, #E11D48 100%);
+  color: #FFFFFF;
+  border-radius: 12px;
+  padding: 10px 14px;
+  box-shadow: 0 8px 18px rgba(225, 29, 72, 0.35);
+  margin: 0 auto 12px;
+}
+
+.ps-price-dollar {
+  display: block;
+  font-size: 32px;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+.ps-price-label {
+  display: block;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-top: 3px;
+}
+
+.ps-flyer-dish-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+  margin-bottom: 12px;
+}
+
+.ps-dish-pill {
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 8px;
+  padding: 6px 2px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+
+.ps-dish-icon {
+  font-size: 14px;
+}
+
+.ps-dish-pill span:last-child {
+  font-size: 7.5px;
+  font-weight: 800;
+  color: #0F172A;
+  letter-spacing: 0.04em;
+}
+
+.ps-flyer-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 8px;
+  border-top: 1px dashed #CBD5E1;
+}
+
+.ps-flyer-stamp {
+  font-size: 8px;
+  font-weight: 800;
+  color: #E11D48;
+}
+
+.ps-flyer-url {
+  font-size: 8px;
+  color: #64748B;
+  font-family: var(--font-mono);
+}
+
+/* 3. App Development Smartphone Mockup */
+.ps-mockup-phone {
+  width: 100%;
+  max-width: 250px;
+  height: 290px;
+  background: #FFFFFF;
+  border-radius: 36px;
+  padding: 8px;
+  box-shadow: 0 20px 42px -8px rgba(16, 185, 129, 0.25), 0 0 0 2px #E2E8F0;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+}
+
+.ps-card:hover .ps-mockup-phone {
+  transform: translateY(-6px) scale(1.03);
+}
+
+.ps-phone-bezel {
+  flex: 1;
+  background: #F8FAFC;
+  border-radius: 30px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  border: 1px solid #E2E8F0;
+}
+
+.ps-phone-speaker {
+  width: 44px;
+  height: 4px;
+  border-radius: 4px;
+  background: #CBD5E1;
+  margin: 6px auto 4px;
+}
+
+.ps-phone-screen {
+  flex: 1;
+  padding: 6px 10px 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.ps-phone-app-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+  margin: 0 auto 6px;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 4px 10px rgba(245, 158, 11, 0.3);
+}
+
+.ps-app-logo-mark {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  background: #FFFFFF;
+  opacity: 0.9;
+}
+
+.ps-app-notifications {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.ps-notif-card {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 8px;
+  padding: 5px 8px;
+  font-size: 8.5px;
+  font-weight: 600;
+  color: #334155;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+.notif-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #EF4444;
+}
+.dot-green { background: #10B981; }
+.dot-cyan { background: #06B6D4; }
+
+.notif-tasks.is-active {
+  background: #FFFFFF;
+  border-color: #10B981;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15);
+  display: block;
+}
+
+.notif-task-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2px;
+}
+
+.task-badge {
+  color: #059669;
+  font-weight: 800;
+  font-size: 8.5px;
+}
+
+.task-count {
+  background: #DEF3E7;
+  color: #059669;
+  padding: 1px 5px;
+  border-radius: 9999px;
+  font-size: 7.5px;
+  font-weight: 800;
+}
+
+.task-title {
+  display: block;
+  font-size: 8px;
+  color: #1E293B;
+  font-weight: 700;
+}
+
+.ps-app-cta-box {
+  margin-top: 6px;
+}
+
+.ps-app-dl-btn {
+  width: 100%;
+  background: #F97316;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 8px;
+  padding: 6px;
+  font-size: 9.5px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 3px 8px rgba(249, 115, 22, 0.3);
+}
+
+.ps-store-badges {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.ps-store-pill {
+  font-size: 7px;
+  color: #64748B;
+  background: #E2E8F0;
+  padding: 2px 5px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+/* 4. Custom Branding Poster Mockup */
+.ps-mockup-poster {
+  width: 100%;
+  max-width: 275px;
+  height: 290px;
+  background: linear-gradient(145deg, #1D4ED8 0%, #1E3A8A 100%);
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 16px 36px -6px rgba(29, 78, 216, 0.35);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px 16px 14px;
+  color: #FFFFFF;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+
+.ps-card:hover .ps-mockup-poster {
+  transform: translateY(-6px) scale(1.03);
+}
+
+.ps-poster-copy {
+  text-align: left;
+}
+
+.ps-poster-line-1 {
+  font-size: 11px;
+  font-weight: 500;
+  opacity: 0.85;
+  letter-spacing: -0.01em;
+}
+
+.ps-poster-line-2 {
+  font-size: 15px;
+  font-weight: 700;
+  margin: 2px 0 0;
+  letter-spacing: -0.025em;
+  color: #FFFFFF;
+}
+
+.ps-poster-graphic {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto 0;
+}
+
+.ps-snowglobe-dome {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0.12) 60%, rgba(255, 255, 255, 0.05) 100%);
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  box-shadow: inset 0 0 14px rgba(255, 255, 255, 0.3), 0 8px 20px rgba(0, 0, 0, 0.25);
+}
+
+.ps-globe-snowman {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+  margin-top: 14px;
+}
+
+.snowman-head {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.snowman-body {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  margin-top: -3px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.ps-snowglobe-base {
+  width: 58px;
+  height: 9px;
+  background: #0F172A;
+  border-radius: 0 0 6px 6px;
+  margin-top: -3px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.ps-poster-watermark {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  opacity: 0.75;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  padding-top: 8px;
+}
+
+.ps-watermark-icon {
+  display: flex;
+  gap: 2px;
+}
+
+.wm-bar {
+  width: 3px;
+  height: 10px;
+  background: #FFFFFF;
+  border-radius: 2px;
+}
+.wm-2 { height: 7px; margin-top: 3px; }
+
+.ps-watermark-text {
+  font-size: 8px;
+  letter-spacing: 0.06em;
+  text-transform: lowercase;
+}
+
+/* --------------------------------------------------------------------------
+   Card Bottom: Description, Tags & Interactive Link
+   -------------------------------------------------------------------------- */
+.ps-card-bottom {
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+.ps-card-desc {
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: #334155;
+  margin: 0 0 12px;
+}
+
+.ps-tags-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-bottom: 14px;
+}
+
+.ps-tag-pill {
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  color: #475569;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.ps-card-action-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ps-stat-preview {
+  display: flex;
+  flex-direction: column;
+}
+
+.ps-stat-num {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #0F172A;
+  font-family: var(--font-mono);
+  line-height: 1;
+}
+
+.ps-stat-lbl {
+  font-size: 10px;
+  color: #64748B;
+  margin-top: 2px;
+}
+
+.ps-explore-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #0F172A;
+  transition: gap 0.25s ease, color 0.25s ease;
+}
+
+.ps-card:hover .ps-explore-link {
+  color: #7C3AED;
+  gap: 9px;
+}
+
+/* --------------------------------------------------------------------------
+   Interactive Modal Dialog Styles
+   -------------------------------------------------------------------------- */
+.ps-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: psModalFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes psModalFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.ps-modal-container {
+  position: relative;
+  width: 100%;
+  max-width: 680px;
+  background: #FFFFFF;
+  border-radius: 28px;
+  padding: 38px 36px;
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  box-shadow: 0 30px 60px -15px rgba(15, 23, 42, 0.25);
+  animation: psModalSlideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+@keyframes psModalSlideUp {
+  from { opacity: 0; transform: translateY(24px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.ps-modal-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  background: #FFFFFF;
+  color: #0F172A;
+  font-size: 16px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.ps-modal-close:hover {
+  background: #0F172A;
+  color: #FFFFFF;
+}
+
+.ps-modal-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(15, 23, 42, 0.06);
+  color: #475569;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 5px 12px;
+  border-radius: 9999px;
+  margin-bottom: 14px;
+}
+
+.ps-modal-title {
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  font-weight: 800;
+  color: #0F172A;
+  letter-spacing: -0.03em;
+  margin: 0 0 10px;
+  line-height: 1.2;
+}
+
+.ps-modal-lead {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #334155;
+  margin: 0 0 20px;
+}
+
+.ps-modal-meta-bar {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  background: #F8FAFC;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 14px;
+  padding: 14px 18px;
+  margin-bottom: 22px;
+}
+
+.ps-meta-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.meta-lbl {
+  font-size: 10px;
+  color: #64748B;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 700;
+}
+
+.meta-val {
+  font-size: 14px;
+  font-weight: 800;
+  color: #0F172A;
+  margin-top: 3px;
+}
+
+.ps-modal-overview {
+  font-size: 14px;
+  line-height: 1.65;
+  color: #475569;
+  margin: 0 0 22px;
+}
+
+.ps-deliverables-box {
+  background: #FFFFFF;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 16px;
+  padding: 18px 20px;
+  margin-bottom: 26px;
+}
+
+.ps-deliv-heading {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #0F172A;
+  font-weight: 800;
+  margin: 0 0 12px;
+}
+
+.ps-deliv-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ps-deliv-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13px;
+  color: #334155;
+  line-height: 1.45;
+}
+
+.deliv-check {
+  color: #10B981;
+  font-weight: 900;
+}
+
+.ps-modal-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.ps-modal-cta {
+  flex: 1;
+  min-width: 200px;
+}
+
+.ps-modal-contact {
+  flex: 1;
+  min-width: 180px;
+}
+
+/* --------------------------------------------------------------------------
+   Responsive Layout Breakpoints
+   -------------------------------------------------------------------------- */
+@media (max-width: 1200px) {
+  .ps-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .portfolio-showcase-section {
+    padding: 85px 0 95px;
+  }
+
+  .ps-cards-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .ps-card {
+    min-height: auto;
+    padding: 22px 18px 20px;
+    border-radius: 24px;
+  }
+
+  .ps-preview-stage {
+    min-height: 270px;
+  }
+
+  .ps-modal-container {
+    padding: 26px 20px;
+  }
+
+  .ps-modal-meta-bar {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .ps-modal-actions {
+    flex-direction: column;
+  }
+}
+

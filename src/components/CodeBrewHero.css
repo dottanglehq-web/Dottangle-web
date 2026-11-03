@@ -1,0 +1,891 @@
+/* ==========================================================================
+   CODE BREW LABS INSPIRED HERO SECTION
+   Modern High-Impact Clean Minimalist Aesthetic
+   ========================================================================== */
+
+:root {
+  --cb-bg: #FFFFFF;
+  --cb-bg-subtle: #F8FAFC;
+  --cb-text-dark: #111827;
+  --cb-text-muted: #4B5563;
+  --cb-text-subtle: #9CA3AF;
+  --cb-accent: #B4FD83;
+  /* Signature Code Brew electric lime */
+  --cb-accent-hover: #9EFA62;
+  --cb-accent-border: #90E255;
+  --cb-accent-dark: #0F172A;
+  --cb-border-grid: rgba(0, 0, 0, 0.06);
+  --cb-border-card: rgba(0, 0, 0, 0.08);
+  --cb-font-sans: 'Poppins', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* --------------------------------------------------------------------------
+   Container & Section Canvas
+   -------------------------------------------------------------------------- */
+.cb-hero-section {
+  position: relative;
+  background-color: var(--cb-bg);
+  color: var(--cb-text-dark);
+  font-family: var(--cb-font-sans);
+  padding: 140px 0 70px 0;
+  overflow: hidden;
+  border-bottom: 1px solid var(--cb-border-grid);
+}
+
+/* Vertical Architectural Grid Lines (Signature Code Brew Backdrop) */
+.cb-grid-backdrop {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.cb-grid-line {
+  width: 1px;
+  height: 100%;
+  background-color: var(--cb-border-grid);
+}
+
+.cb-hero-container {
+  position: relative;
+  z-index: 2;
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* --------------------------------------------------------------------------
+   1. Giant Typographic Brand Banner with Floating Interactive Role Badges
+   -------------------------------------------------------------------------- */
+.cb-banner-wrapper {
+  position: relative;
+  margin-bottom: 50px;
+  user-select: none;
+}
+
+.cb-giant-title {
+  font-size: clamp(3.2rem, 9.8vw, 10.5rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+  color: var(--cb-text-dark);
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  position: relative;
+  width: 100%;
+}
+
+.cb-brand-word {
+  display: inline-flex;
+  position: relative;
+  align-items: baseline;
+}
+
+.cb-char-box {
+  position: relative;
+  display: inline-block;
+}
+
+.cb-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Solid radiant orange brand dot, scaled down to match lowercase x-height cleanly between D and T */
+/* Solid radiant orange brand dot, scaled down cleanly between D and T matching Dottangle brandmark */
+.cb-logo-o {
+  display: inline-block;
+  vertical-align: baseline;
+  width: 0.38em;
+  height: 0.38em;
+  margin: 0 0.05em;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #FF9100 0%, #FE6600 50%, #E83E00 100%);
+  box-shadow: 0 4px 14px rgba(254, 102, 0, 0.35);
+  position: relative;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
+  cursor: pointer;
+}
+
+.cb-logo-o:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(254, 102, 0, 0.5);
+}
+
+/* Floating Interactive Role Tag Badges */
+.cb-role-tag {
+  position: absolute;
+  z-index: 5;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), filter 0.3s ease;
+  animation: cbFloat 4s ease-in-out infinite;
+}
+
+.cb-role-tag:hover {
+  transform: translateY(-5px) scale(1.08);
+  z-index: 10;
+}
+
+/* Individual Role Positions across the Letters */
+.cb-role-strategist {
+  bottom: -36px;
+  left: 0%;
+  animation-delay: 0s;
+}
+
+.cb-role-manager {
+  top: -38px;
+  left: 18%;
+  animation-delay: 0.8s;
+}
+
+.cb-role-designer {
+  bottom: -36px;
+  left: 32%;
+  animation-delay: 1.6s;
+}
+
+.cb-role-developer {
+  top: -38px;
+  left: 50%;
+  animation-delay: 2.2s;
+}
+
+.cb-role-marketer {
+  bottom: -36px;
+  left: 68%;
+  animation-delay: 1.2s;
+}
+
+.cb-role-investor {
+  top: -38px;
+  right: 5%;
+  animation-delay: 2.8s;
+}
+
+/* Role Pointer Arrow (Code Brew's Signature Accent Triangle) */
+.cb-role-arrow {
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  margin-bottom: 2px;
+}
+
+.cb-arrow-down {
+  border-top: 7px solid var(--cb-accent);
+  margin-top: 2px;
+  margin-bottom: 0;
+}
+
+.cb-arrow-up {
+  border-bottom: 7px solid var(--cb-accent);
+}
+
+/* Pill badge styling */
+.cb-role-pill {
+  background: #F3F4F6;
+  color: #1F2937;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 4px;
+  white-space: nowrap;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  letter-spacing: 0.02em;
+}
+
+.cb-role-tag:hover .cb-role-pill {
+  background: var(--cb-accent);
+  color: var(--cb-accent-dark);
+}
+
+/* Circular Avatar Embedded Within the Letter */
+.cb-letter-avatar {
+  width: clamp(24px, 3.2vw, 44px);
+  height: clamp(24px, 3.2vw, 44px);
+  border-radius: 50%;
+  border: 2px solid #FFFFFF;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  position: absolute;
+  object-fit: cover;
+  transition: transform 0.25s ease;
+  z-index: 4;
+}
+
+.cb-role-tag:hover~.cb-letter-avatar,
+.cb-letter-avatar:hover {
+  transform: scale(1.18);
+  border-color: var(--cb-accent);
+}
+
+/* Avatar placements */
+.cb-avatar-c {
+  bottom: 12%;
+  right: 8%;
+}
+
+.cb-avatar-d {
+  top: 14%;
+  left: 22%;
+}
+
+.cb-avatar-b {
+  bottom: 16%;
+  left: 18%;
+}
+
+.cb-avatar-e {
+  top: 12%;
+  right: 18%;
+}
+
+.cb-avatar-l {
+  bottom: 22%;
+  left: 14%;
+}
+
+.cb-avatar-a {
+  top: 14%;
+  right: 22%;
+}
+
+@keyframes cbFloat {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   2. Main Hero 2-Column Core Split Layout
+   -------------------------------------------------------------------------- */
+.cb-hero-split {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 56px;
+  align-items: flex-start;
+  padding-top: 10px;
+}
+
+/* Left Column: Bold Headline */
+.cb-hero-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.cb-badge-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(180, 253, 131, 0.22);
+  border: 1px solid rgba(144, 226, 85, 0.45);
+  padding: 5px 14px;
+  border-radius: 9999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #166534;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.cb-pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #16A34A;
+  box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.7);
+  animation: cbPulse 2s infinite;
+}
+
+@keyframes cbPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.7);
+  }
+
+  70% {
+    box-shadow: 0 0 0 8px rgba(22, 163, 74, 0);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(22, 163, 74, 0);
+  }
+}
+
+.cb-hero-heading {
+  font-size: clamp(2.4rem, 4.2vw, 4.4rem);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+  color: var(--cb-text-dark);
+  margin: 0 0 24px 0;
+}
+
+.cb-highlight-gradient {
+  background: linear-gradient(135deg, #0F172A 30%, #0284C7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Mini Statistics Strip on Left */
+.cb-stats-strip {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  margin-top: 18px;
+  padding-top: 24px;
+  border-top: 1px solid var(--cb-border-grid);
+  width: 100%;
+}
+
+.cb-stat-unit {
+  display: flex;
+  flex-direction: column;
+}
+
+.cb-stat-val {
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: var(--cb-text-dark);
+  line-height: 1.1;
+}
+
+.cb-stat-lbl {
+  font-size: 0.78rem;
+  color: var(--cb-text-muted);
+  font-weight: 500;
+  margin-top: 2px;
+}
+
+.cb-stat-sep {
+  width: 1px;
+  height: 28px;
+  background: var(--cb-border-grid);
+}
+
+/* Right Column: Narrative, Capabilities & CTAs */
+.cb-hero-right {
+  display: flex;
+  flex-direction: column;
+  padding-top: 14px;
+}
+
+.cb-hero-subhead {
+  font-size: clamp(1.15rem, 1.6vw, 1.4rem);
+  font-weight: 500;
+  color: var(--cb-text-dark);
+  line-height: 1.45;
+  margin: 0 0 22px 0;
+}
+
+.cb-subhead-highlight {
+  font-weight: 700;
+  color: #0F172A;
+  border-bottom: 2px solid var(--cb-accent);
+  padding-bottom: 1px;
+}
+
+/* Checklist Points with Custom Icons */
+.cb-check-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 32px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.cb-check-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: clamp(0.92rem, 1.1vw, 1.05rem);
+  color: var(--cb-text-muted);
+  line-height: 1.5;
+}
+
+.cb-check-item strong {
+  color: var(--cb-text-dark);
+  font-weight: 600;
+}
+
+.cb-check-icon-circle {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1.5px solid #111827;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.cb-check-icon-circle svg {
+  width: 12px;
+  height: 12px;
+  stroke: #111827;
+  stroke-width: 2.2;
+}
+
+/* Dual CTA Action Buttons */
+.cb-cta-bar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+/* Signature Code Brew High-Visibility Primary Button */
+.cb-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  background-color: var(--cb-accent);
+  color: var(--cb-accent-dark);
+  border: 1px solid var(--cb-accent-border);
+  border-radius: 8px;
+  padding: 8px 10px 8px 20px;
+  font-size: 1.02rem;
+  font-weight: 700;
+  text-decoration: none;
+  height: 52px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(180, 253, 131, 0.4);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease, box-shadow 0.25s ease;
+  cursor: pointer;
+}
+
+/* Sweeping Light Reflection Animation */
+.cb-btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent 20%, rgba(255, 255, 255, 0.75) 50%, transparent 80%);
+  animation: cbShine 2.8s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes cbShine {
+  0% {
+    left: -100%;
+  }
+
+  35%,
+  100% {
+    left: 120%;
+  }
+}
+
+.cb-btn-primary:hover {
+  transform: translateY(-2px);
+  background-color: var(--cb-accent-hover);
+  box-shadow: 0 8px 22px rgba(180, 253, 131, 0.55);
+}
+
+.cb-btn-text {
+  position: relative;
+  z-index: 2;
+  letter-spacing: -0.01em;
+}
+
+/* Round Icon Container inside Button */
+.cb-btn-arrow-box {
+  width: 34px;
+  height: 34px;
+  background: #FFFFFF;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 2;
+  transition: transform 0.25s ease;
+}
+
+.cb-btn-primary:hover .cb-btn-arrow-box {
+  transform: translateX(4px);
+}
+
+.cb-btn-arrow-box svg {
+  width: 14px;
+  height: 14px;
+  stroke: #111827;
+  stroke-width: 2.2;
+}
+
+/* Secondary Button */
+.cb-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #FFFFFF;
+  color: #1F2937;
+  border: 1px solid #D1D5DB;
+  border-radius: 8px;
+  padding: 0 20px;
+  font-size: 0.98rem;
+  font-weight: 600;
+  text-decoration: none;
+  height: 52px;
+  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.cb-btn-secondary:hover {
+  background-color: #F9FAFB;
+  border-color: #9CA3AF;
+  transform: translateY(-1px);
+}
+
+.cb-btn-secondary svg {
+  width: 14px;
+  height: 14px;
+  transition: transform 0.2s ease;
+}
+
+.cb-btn-secondary:hover svg {
+  transform: translate(2px, -2px);
+}
+
+/* Client Ratings Strip */
+.cb-rating-strip {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.cb-avatar-stack {
+  display: flex;
+  align-items: center;
+}
+
+.cb-stack-img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid #FFFFFF;
+  margin-left: -8px;
+  object-fit: cover;
+}
+
+.cb-stack-img:first-child {
+  margin-left: 0;
+}
+
+.cb-rating-copy {
+  font-size: 0.82rem;
+  color: var(--cb-text-muted);
+  line-height: 1.35;
+}
+
+.cb-rating-copy strong {
+  color: var(--cb-text-dark);
+}
+
+/* --------------------------------------------------------------------------
+   3. Social Proof & Industry Recognition Badges Bar (Lower Hero)
+   -------------------------------------------------------------------------- */
+.cb-trust-bar {
+  margin-top: 50px;
+  padding-top: 32px;
+  border-top: 1px solid var(--cb-border-grid);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.cb-trust-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--cb-text-subtle);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.cb-badges-flex {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.cb-badge-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #F9FAFB;
+  border: 1px solid #E5E7EB;
+  border-radius: 8px;
+  padding: 8px 14px;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cb-badge-card:hover {
+  transform: translateY(-2px);
+  border-color: #D1D5DB;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.cb-badge-card-stars {
+  color: #F59E0B;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+}
+
+.cb-badge-title {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #111827;
+  display: block;
+  line-height: 1.2;
+}
+
+.cb-badge-sub {
+  font-size: 0.7rem;
+  color: #6B7280;
+  display: block;
+}
+
+/* --------------------------------------------------------------------------
+   4. Responsive Breakpoints
+   -------------------------------------------------------------------------- */
+@media (max-width: 1024px) {
+  .cb-hero-split {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .cb-hero-heading {
+    max-width: 720px;
+  }
+
+  .cb-hero-right {
+    padding-top: 0;
+  }
+
+  .cb-banner-wrapper {
+    margin-bottom: 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .cb-hero-section {
+    padding: 90px 0 40px 0;
+  }
+
+  .cb-giant-title {
+    font-size: clamp(2.4rem, 14vw, 5rem);
+    letter-spacing: -0.03em;
+  }
+
+  /* Compact role badges for mobile */
+  .cb-role-tag {
+    transform: scale(0.85);
+  }
+
+  .cb-role-tag:hover {
+    transform: scale(0.92);
+  }
+
+  .cb-role-strategist {
+    top: -28px;
+    left: 10%;
+  }
+
+  .cb-role-manager {
+    top: -32px;
+    right: 5%;
+  }
+
+  .cb-role-developer {
+    top: -30px;
+    right: 15%;
+  }
+
+  .cb-role-designer,
+  .cb-role-marketer,
+  .cb-role-investor {
+    display: none;
+    /* Hide overflow badges on small mobile screens to prevent clutter */
+  }
+
+  .cb-hero-heading {
+    font-size: 2.2rem;
+    line-height: 1.15;
+  }
+
+  .cb-cta-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .cb-btn-primary,
+  .cb-btn-secondary {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .cb-btn-arrow-box {
+    position: absolute;
+    right: 10px;
+  }
+
+  .cb-stats-strip {
+    flex-wrap: wrap;
+    gap: 18px;
+  }
+
+  .cb-stat-sep {
+    display: none;
+  }
+
+  .cb-trust-bar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Daylight Ambient Pastel Orbs & Entrance Keyframes
+   -------------------------------------------------------------------------- */
+.cb-ambient-pastel-backdrop {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.cb-pastel-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.45;
+  will-change: transform;
+  animation: cbOrbFloat 14s ease-in-out infinite alternate;
+}
+
+.cb-orb-peach {
+  width: 520px;
+  height: 520px;
+  top: -120px;
+  left: -100px;
+  background: radial-gradient(circle, rgba(254, 205, 195, 0.7) 0%, transparent 70%);
+}
+
+.cb-orb-lavender {
+  width: 480px;
+  height: 480px;
+  top: 40px;
+  right: -80px;
+  background: radial-gradient(circle, rgba(221, 207, 252, 0.65) 0%, transparent 70%);
+  animation-delay: -5s;
+}
+
+.cb-orb-mint {
+  width: 460px;
+  height: 460px;
+  bottom: -100px;
+  left: 30%;
+  background: radial-gradient(circle, rgba(199, 245, 220, 0.6) 0%, transparent 70%);
+  animation-delay: -9s;
+}
+
+@keyframes cbOrbFloat {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(30px, -20px, 0) scale(1.08); }
+  100% { transform: translate3d(-20px, 25px, 0) scale(0.95); }
+}
+
+/* Staggered Page-Load Transitions */
+.cb-hero-section .cb-banner-wrapper,
+.cb-hero-section .cb-hero-left,
+.cb-hero-section .cb-hero-right,
+.cb-hero-section .cb-cta-bar,
+.cb-hero-section .cb-stats-strip {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cb-hero-animated .cb-banner-wrapper {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.05s;
+}
+
+.cb-hero-animated .cb-hero-left {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.18s;
+}
+
+.cb-hero-animated .cb-hero-right {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.28s;
+}
+
+.cb-hero-animated .cb-cta-bar {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.38s;
+}
+
+.cb-hero-animated .cb-stats-strip {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.48s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cb-pastel-orb {
+    animation: none;
+  }
+  .cb-hero-section .cb-banner-wrapper,
+  .cb-hero-section .cb-hero-left,
+  .cb-hero-section .cb-hero-right,
+  .cb-hero-section .cb-cta-bar,
+  .cb-hero-section .cb-stats-strip {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

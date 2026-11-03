@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import HeroSection from '../components/HeroSection';
-import ServicesWheel from '../components/ServicesWheel';
+import DigitalServicesSection from '../digital/DigitalServicesSection';
+import TrustedBrands from '../components/TrustedBrands';
+import PortfolioShowcaseSection from '../components/PortfolioShowcaseSection';
+import CustomerReviewsSection from '../components/CustomerReviewsSection';
 
 export default function HomePage() {
   const [openFaq, setOpenFaq] = useState(0);
@@ -34,68 +37,14 @@ export default function HomePage() {
       {/* 1. Centered Hero Section with Instant Zero-Delay 3D Work Platform Video Background */}
       <HeroSection />
 
-      {/* 2. Trust Marquee & Animated Metrics Counters */}
-      <section className="section trust-section" id="trust">
-        <div className="container text-center">
-          <p className="trust-heading">Trusted by ambitious businesses, tech founders & direct-to-consumer brands</p>
-        </div>
+      {/* 2. Trusted Brands Section */}
+      <TrustedBrands />
 
-        {/* 2-Row Animated Brand Logo Showcase */}
-        <div className="trust-marquee-showcase">
-          <div className="trust-marquee-wrapper trust-row-1" aria-label="Client & Partner Brands Row 1">
-            <div className="marquee-track marquee-track-ltr-35">
-              <div className="marquee-group">
-                <div className="brand-item glass-chip"><span className="brand-logo-icon">▲</span><span className="brand-name font-serif-logo">NORTH / CO</span></div>
-                <div className="brand-item glass-chip"><span className="brand-logo-icon">◼</span><span className="brand-name font-slab-logo">FORMA</span></div>
-                <div className="brand-item glass-chip"><span className="brand-logo-icon">◎</span><span className="brand-name font-bold-logo">KINSHIP</span></div>
-                <div className="brand-item glass-chip"><span className="brand-logo-icon">⌒</span><span className="brand-name font-mono-logo">ARC WORKS</span></div>
-                <div className="brand-item glass-chip"><span className="brand-logo-icon">✦</span><span className="brand-name font-serif-logo serif-italic">STILL</span></div>
-                <div className="brand-item glass-chip"><span className="brand-logo-icon">⬡</span><span className="brand-name font-clean-logo">FIELD</span></div>
-                <div className="brand-item glass-chip"><span className="brand-logo-icon">▮</span><span className="brand-name font-bold-logo">MONOLITH</span></div>
-                <div className="brand-item glass-chip"><span className="brand-logo-icon">△</span><span className="brand-name font-slab-logo">APEX</span></div>
-              </div>
-              <div className="marquee-group" aria-hidden="true">
-                <div className="brand-item glass-chip"><span className="brand-logo-icon">▲</span><span className="brand-name font-serif-logo">NORTH / CO</span></div>
-                <div className="brand-item glass-chip"><span className="brand-logo-icon">◼</span><span className="brand-name font-slab-logo">FORMA</span></div>
-                <div className="brand-item glass-chip"><span className="brand-logo-icon">◎</span><span className="brand-name font-bold-logo">KINSHIP</span></div>
-                <div className="brand-item glass-chip"><span className="brand-logo-icon">⌒</span><span className="brand-name font-mono-logo">ARC WORKS</span></div>
-                <div className="brand-item glass-chip"><span className="brand-logo-icon">✦</span><span className="brand-name font-serif-logo serif-italic">STILL</span></div>
-                <div className="brand-item glass-chip"><span className="brand-logo-icon">⬡</span><span className="brand-name font-clean-logo">FIELD</span></div>
-                <div className="brand-item glass-chip"><span className="brand-logo-icon">▮</span><span className="brand-name font-bold-logo">MONOLITH</span></div>
-                <div className="brand-item glass-chip"><span className="brand-logo-icon">△</span><span className="brand-name font-slab-logo">APEX</span></div>
-              </div>
-            </div>
-          </div>
+      {/* 3. Premier Portfolio & Core Disciplines Showcase (Reference: follishitechsolutions.org) */}
+      <PortfolioShowcaseSection />
 
-          <div className="trust-marquee-wrapper trust-row-2" aria-label="Client & Partner Brands Row 2">
-            <div className="marquee-track marquee-track-rtl-42">
-              <div className="marquee-group">
-                <div className="brand-item glass-chip"><span className="brand-logo-icon">★</span><span className="brand-name font-clean-logo">NOVA</span></div>
-                <div className="brand-item glass-chip"><span className="brand-logo-icon">◈</span><span className="brand-name font-mono-logo">VERTEX</span></div>
-                <div className="brand-item glass-chip"><span className="brand-logo-icon">●</span><span className="brand-name font-bold-logo">LUMA</span></div>
-                <div className="brand-item glass-chip"><span className="brand-logo-icon">⨁</span><span className="brand-name font-clean-logo">ORBIT</span></div>
-                <div className="brand-item glass-chip"><span className="brand-logo-icon">✦</span><span className="brand-name font-serif-logo">NORTHSTAR</span></div>
-                <div className="brand-item glass-chip"><span className="brand-logo-icon">✳</span><span className="brand-name font-slab-logo">ASTER</span></div>
-                <div className="brand-item glass-chip"><span className="brand-logo-icon">≋</span><span className="brand-name font-serif-logo serif-italic">MORROW</span></div>
-                <div className="brand-item glass-chip"><span className="brand-logo-icon">▼</span><span className="brand-name font-bold-logo">VANTA</span></div>
-              </div>
-              <div className="marquee-group" aria-hidden="true">
-                <div className="brand-item glass-chip"><span className="brand-logo-icon">★</span><span className="brand-name font-clean-logo">NOVA</span></div>
-                <div className="brand-item glass-chip"><span className="brand-logo-icon">◈</span><span className="brand-name font-mono-logo">VERTEX</span></div>
-                <div className="brand-item glass-chip"><span className="brand-logo-icon">●</span><span className="brand-name font-bold-logo">LUMA</span></div>
-                <div className="brand-item glass-chip"><span className="brand-logo-icon">⨁</span><span className="brand-name font-clean-logo">ORBIT</span></div>
-                <div className="brand-item glass-chip"><span className="brand-logo-icon">✦</span><span className="brand-name font-serif-logo">NORTHSTAR</span></div>
-                <div className="brand-item glass-chip"><span className="brand-logo-icon">✳</span><span className="brand-name font-slab-logo">ASTER</span></div>
-                <div className="brand-item glass-chip"><span className="brand-logo-icon">≋</span><span className="brand-name font-serif-logo serif-italic">MORROW</span></div>
-                <div className="brand-item glass-chip"><span className="brand-logo-icon">▼</span><span className="brand-name font-bold-logo">VANTA</span></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 3. Interactive Rotating Services Wheel Showcase */}
-      <ServicesWheel />
+      {/* 3. Fully interactive smartphone services experience */}
+      <DigitalServicesSection />
 
       {/* 4. Studio Growth & Expertise Overview (Modelled after Reference) */}
       <section className="section studio-growth-section" id="studio-overview">
@@ -196,6 +145,9 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* 5. Verified Customer Reviews & Testimonials (Google Reviews Architecture) */}
+      <CustomerReviewsSection />
 
       {/* 8. Interactive FAQ Accordion */}
       <section className="section faq-section" id="faq">

@@ -2,6 +2,7 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import ScrollToTop from './components/ScrollToTop';
 import ScrollReveal from './components/ScrollReveal';
+import CustomCursor from './components/CustomCursor';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 
@@ -20,6 +21,7 @@ export default function App() {
 
       {/* Universal Scroll-Triggered Slide-In Engine */}
       <ScrollReveal />
+      <CustomCursor />
 
       {/* Luxury Ambient Lighting Glow */}
       <div className="ambient-glow-wrapper" aria-hidden="true">
@@ -35,7 +37,7 @@ export default function App() {
       <main id="main-content">
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/services" element={<ServicesPage />} />
+          <Route path="/services/*" element={<ServicesPage />} />
           <Route path="/work" element={<WorkPage />} />
           <Route path="/process" element={<ProcessPage />} />
           <Route path="/pricing" element={<PricingPage />} />

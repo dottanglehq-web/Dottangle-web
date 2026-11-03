@@ -15,18 +15,15 @@ export default function Footer() {
         {/* Top Highlight Row */}
         <div className="footer-top-row">
           <div className="footer-brand-col">
-            <Link to="/" className="brand-logo" aria-label="the oblique - Home">
-              <img 
-                src={theme === 'light' ? '/the-oblique-lockup-light.png' : '/the-oblique-lockup-dark.png'} 
-                srcSet={theme === 'light'
-                  ? '/the-oblique-lockup-light-mobile.png 261w, /the-oblique-lockup-light.png 957w'
-                  : '/the-oblique-lockup-dark-mobile.png 261w, /the-oblique-lockup-dark.png 957w'
-                }
-                sizes="(max-width: 600px) 140px, 185px"
-                alt="the oblique" 
-                className="brand-lockup-img footer-lockup-img" 
-                width="170" 
-                height="46" 
+            <Link to="/" className="brand-logo" aria-label="Dottangle - Home">
+              <img
+                src="/dottangle-logo-white.png"
+                srcSet="/dottangle-logo-mobile-white.png 261w, /dottangle-logo-white.png 800w"
+                sizes="(max-width: 600px) 130px, 185px"
+                alt="Dottangle"
+                className="brand-lockup-img footer-lockup-img dottangle-lockup-img"
+                width="170"
+                height="46"
               />
             </Link>
             <p className="footer-tagline">
@@ -36,8 +33,8 @@ export default function Footer() {
 
           <div className="footer-email-col">
             <span className="footer-inquiries-label">NEW BUSINESS INQUIRIES</span>
-            <a href="mailto:theobligue@gmail.com" className="footer-email-link">
-              theobligue@gmail.com ↗
+            <a href="mailto:hello@dottangle.com" className="footer-email-link">
+              hello@dottangle.com ↗
             </a>
           </div>
         </div>
@@ -74,8 +71,8 @@ export default function Footer() {
             <h4 className="footer-col-title">Social & Connect</h4>
             <ul className="footer-links">
               <li>
-                <a href="https://www.instagram.com/theobligue/" target="_blank" rel="noopener noreferrer">
-                  Instagram (@theobligue) ↗
+                <a href="https://www.instagram.com/dottangle/" target="_blank" rel="noopener noreferrer">
+                  Instagram (@dottangle) ↗
                 </a>
               </li>
               <li>
@@ -84,8 +81,8 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a href="mailto:theobligue@gmail.com">
-                  theobligue@gmail.com ↗
+                <a href="mailto:hello@dottangle.com">
+                  hello@dottangle.com ↗
                 </a>
               </li>
             </ul>
@@ -95,7 +92,7 @@ export default function Footer() {
         {/* Bottom Legal & Back to Top Bar */}
         <div className="footer-bottom-bar">
           <div className="footer-copyright">
-            © {new Date().getFullYear()} the oblique · Crafted in Ludhiana, Punjab. Working with ambitious brands worldwide.
+            © {new Date().getFullYear()} Dottangle · Crafted in Ludhiana, Punjab. Working with ambitious brands worldwide.
           </div>
 
           <div className="footer-legal-links">
