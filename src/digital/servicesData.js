@@ -11,7 +11,7 @@ export const services = [
 ];
 
 export const projects = [
-  { title: 'Apex Vouchers', type: 'Commerce platform', image: '/images/project-apexvouchers.jpg' },
-  { title: 'Jane Trade', type: 'Digital product', image: '/images/project-janetrade.jpg' },
-  { title: 'Editorial Studio', type: 'Brand experience', image: '/images/project-1.jpg' }
+  { title: 'Apex Vouchers', type: 'Commerce platform', url: 'https://apexvouchers.com', image: '/images/project-apexvouchers.jpg' },
+  { title: 'Jane Trade', type: 'Digital product', url: 'https://jane-trade.vercel.app/', image: '/images/project-janetrade.jpg' },
+  { title: 'Editorial Studio', type: 'Brand experience', url: '/work', image: '/images/project-1.jpg' }
 ];

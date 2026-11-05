@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
+import useViewportActivity from '../hooks/useViewportActivity';
 import { Link } from 'react-router-dom';
 import './CodeBrewHero.css';
 
@@ -23,6 +24,8 @@ export default function CodeBrewHero({
   secondaryCtaText = "Explore Live Demos",
   secondaryCtaLink = "/work"
 }) {
+  const sectionRef = useRef(null);
+  const active = useViewportActivity(sectionRef);
   const [activeTooltip, setActiveTooltip] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
 
@@ -90,7 +93,7 @@ export default function CodeBrewHero({
   ];
 
   return (
-    <section className={`cb-hero-section ${isLoaded ? 'cb-hero-animated' : ''}`} id="hero">
+    <section ref={sectionRef} data-active={active} className={`cb-hero-section ${isLoaded ? 'cb-hero-animated' : ''}`} id="hero">
       {/* Daylight Ambient Pastel Floating Orbs */}
       <div className="cb-ambient-pastel-backdrop" aria-hidden="true">
         <div className="cb-pastel-orb cb-orb-peach" />

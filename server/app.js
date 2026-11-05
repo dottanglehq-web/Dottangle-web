@@ -21,7 +21,7 @@ export function validateInquiry(body) {
   if (/[\r\n]/.test(data.name + data.email + data.subject)) throw new Error('Invalid contact details.');
   return data;
 }
-export function createApp({ Model = Inquiry, ready = () => true, env = process.env } = {}) {
+export function createApp({ Model = Inquiry, ready = () => true, env = process.env, onAccepted } = {}) {
   const app = express();
   app.disable('x-powered-by');
   if (env.TRUST_PROXY_HOPS) app.set('trust proxy', Number(env.TRUST_PROXY_HOPS));
@@ -44,7 +44,8 @@ export function createApp({ Model = Inquiry, ready = () => true, env = process.e
       catch (error) { if (error.code !== 11000) throw error; item = await Model.findOne({ dedupeKey }); duplicate = true; }
       if (!item) throw new Error('Storage failure');
       res.status(duplicate ? 200 : 201).json({ success: true, submissionId: item.submissionId, confirmationStatus: item.notifications.customer.status });
-      // The durable worker owns delivery; the HTTP response only confirms persistence.
+      // Scheduling failure must never turn an already persisted inquiry into an HTTP failure.
+      try { onAccepted?.(item.submissionId); } catch { console.error('Email scheduling unavailable; durable jobs retained.'); }
     } catch { res.status(503).json({ error: 'We could not save your inquiry. Please try again shortly.' }); }
   });
   app.post('/api/newsletter', limiter, async (req,res) => {
@@ -58,14 +59,15 @@ export function createApp({ Model = Inquiry, ready = () => true, env = process.e
   app.use((err,req,res,next) => res.status(err.status === 413 ? 413 : 400).json({ error: 'Unable to process this request.' }));
   return app;
 }
-export async function processNotifications({ Model = Inquiry, send, now = new Date() }) {
+export async function processNotifications({ Model = Inquiry, send, now = new Date(), scope = {}, maxPerChannel = 20, deadline = Infinity }) {
   for (const channel of ['admin','customer']) {
     const p = `notifications.${channel}`;
     // An expired send may have reached the provider. Require reconciliation instead of resending blindly.
-    await Model.updateMany({ [`${p}.status`]: 'sending', [`${p}.lockedUntil`]: { $lt: now } }, { $set: { [`${p}.status`]: 'uncertain', [`${p}.errorCode`]: 'DELIVERY_RECONCILIATION_REQUIRED' } });
-    for (let count = 0; count < 20; count++) {
+    await Model.updateMany({ ...scope, [`${p}.status`]: 'sending', [`${p}.lockedUntil`]: { $lt: now } }, { $set: { [`${p}.status`]: 'uncertain', [`${p}.errorCode`]: 'DELIVERY_RECONCILIATION_REQUIRED' } });
+    for (let count = 0; count < maxPerChannel; count++) {
+      if (Date.now() >= deadline) return;
       const token = randomUUID();
-      const item = await Model.findOneAndUpdate({ [`${p}.status`]: { $in: ['pending','retry','pending_configuration'] }, [`${p}.nextAttempt`]: { $lte: now }, [`${p}.attempts`]: { $lt: 8 } }, { $set: { [`${p}.status`]: 'sending', [`${p}.lockToken`]: token, [`${p}.lockedUntil`]: new Date(now.getTime()+120000) }, $inc: { [`${p}.attempts`]: 1 } }, { returnDocument: 'after' });
+      const item = await Model.findOneAndUpdate({ ...scope, [`${p}.status`]: { $in: ['pending','retry','pending_configuration'] }, [`${p}.nextAttempt`]: { $lte: now }, [`${p}.attempts`]: { $lt: 8 } }, { $set: { [`${p}.status`]: 'sending', [`${p}.lockToken`]: token, [`${p}.lockedUntil`]: new Date(now.getTime()+120000) }, $inc: { [`${p}.attempts`]: 1 } }, { returnDocument: 'after' });
       if (!item) break;
       let result;
       try { result = { ...await send(item, channel), errorCode: null }; }

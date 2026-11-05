@@ -434,22 +434,6 @@
   font-size: 13px;
 }
 
-.dp-lock-camera {
-  position: absolute;
-  right: 24px;
-  bottom: 85px;
-  width: 40px;
-  height: 40px;
-  border: 0;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  background: rgba(0, 0, 0, 0.28);
-  color: #FFFFFF;
-  backdrop-filter: blur(8px);
-  cursor: pointer;
-}
-
 .dp-unlock {
   position: absolute;
   bottom: 25px;
@@ -652,8 +636,7 @@
   font-size: 11px;
 }
 
-.dp-browser form button,
-.dp-camera-permission button {
+.dp-browser form button{
   border: 0;
   border-radius: 8px;
   background: #386DEC;
@@ -696,174 +679,17 @@
   font-size: 11px;
   color: #386DEC;
 }
-
-.dp-camera {
-  height: 100%;
-  position: relative;
-  background: #050505;
-  display: grid;
-  place-items: center;
-  overflow: hidden;
-}
-
-.dp-camera video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.dp-camera canvas {
-  display: none;
-}
-
-.dp-camera-permission {
-  position: absolute;
-  text-align: center;
-  color: #FFFFFF;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  padding: 25px;
-}
-
-.dp-camera-permission > button {
-  padding: 8px 12px;
-}
-
-.dp-camera-permission small {
-  font-size: 10px;
-  color: #94A3B8;
-  line-height: 1.5;
-}
-
-.dp-camera-note {
-  position: absolute;
-  color: #FFFFFF;
-  font-size: 11px;
-}
-
-.dp-shutter {
-  position: absolute;
-  bottom: 20px;
-  width: 52px;
-  height: 52px;
-  border: 5px solid #FFFFFF;
-  border-radius: 50%;
-  background: #DDDDDD;
-  box-shadow: 0 0 0 2px #777777;
-  cursor: pointer;
-}
-
-.dp-shot-preview {
-  position: absolute;
-  bottom: 24px;
-  left: 18px;
-  width: 40px;
-  height: 40px;
-  border-radius: 6px;
-  object-fit: cover;
-  border: 2px solid #FFFFFF;
-}
-
-.dp-calc {
-  height: 100%;
-  padding: 20px 12px;
-  background: #111111;
-  color: #FFFFFF;
-  display: flex;
-  flex-direction: column;
-}
-
-.dp-calc > div {
-  font-size: 38px;
-  text-align: right;
-  margin: auto 5px 15px;
-  overflow: hidden;
-}
-
-.dp-calc section {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 7px;
-}
-
-.dp-calc button {
-  height: 47px;
-  border: 0;
-  border-radius: 50%;
-  background: #343438;
-  color: #FFFFFF;
-  font-size: 17px;
-  cursor: pointer;
-}
-
-.dp-calc button.op {
-  background: #EF9918;
-}
-
-.dp-gallery,
 .dp-services-list,
 .dp-settings,
 .dp-projects {
   padding: 16px;
 }
-
-.dp-gallery h3,
 .dp-services-list h3,
 .dp-settings h3,
 .dp-projects h3 {
   margin: 0 0 16px;
   font-size: 14px;
   font-weight: 700;
-}
-
-.dp-gallery > div {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 4px;
-}
-
-.dp-gallery button {
-  padding: 0;
-  border: 0;
-  cursor: pointer;
-}
-
-.dp-gallery img {
-  display: block;
-  width: 100%;
-  aspect-ratio: 1;
-  object-fit: cover;
-}
-
-.dp-gallery p {
-  font-size: 11px;
-  color: #64748B;
-  text-align: center;
-  padding: 80px 20px;
-}
-
-.dp-gallery-preview {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  background: #111111;
-}
-
-.dp-gallery-preview button {
-  align-self: flex-start;
-  margin: 10px;
-  border: 0;
-  background: none;
-  color: #FFFFFF;
-  cursor: pointer;
-}
-
-.dp-gallery-preview img {
-  width: 100%;
-  height: 80%;
-  object-fit: contain;
 }
 
 .dp-services-list > button {
@@ -1205,4 +1031,31 @@
   .dp-service-card {
     animation: none !important;
   }
+}
+
+/* Phone interactions do no perpetual animation work when idle. */
+.dp-phone { animation: dp-phone-in .45s ease both; }
+.dp-phone[data-active="false"], .dp-phone[data-active="false"] * { animation-play-state: paused !important; }
+.dp-app-window[hidden], .dp-app-panel[hidden] { display: none; }
+.dp-app-panel { min-height: 100%; }
+.dp-unlock { touch-action: pan-y; }
+.dp-unlock > button { touch-action: none; }
+.dp-app-window > main { overscroll-behavior: contain; }
+.dp-app-loading { padding: 16px; font-size: 12px; }
+.dp-contact-app { padding: 14px; }
+.dp-contact-app > a { display: block; font-size: 11px; margin: 8px 0; color: #6d28d9; overflow-wrap: anywhere; }
+.dp-contact-app .contact-form-compact { grid-template-columns: 1fr; gap: 10px; margin-top: 14px; }
+.dp-contact-app .contact-field-label { font-size: 11px; margin-bottom: 3px; }
+.dp-contact-app .contact-input, .dp-contact-app .contact-textarea { padding: 9px; min-height: 36px; font-size: 16px; border-radius: 8px; }
+.dp-contact-app .contact-submit-btn { padding: 12px; font-size: 12px; }
+.dp-contact-app .contact-field-full { grid-column: 1 / -1; }
+.dp-projects > a { color: inherit; text-decoration: none; }
+@media (max-width: 768px), (pointer: coarse) {
+  .dp-phone { box-shadow: 0 12px 24px rgba(15,23,42,.2); animation: none; }
+  .dp-phone-glow, .dp-ambient-glow { filter: none; opacity: .25; } .dp-unlock, .dp-phone-nav { backdrop-filter: none; }
+  .dp-service-card { animation: none; box-shadow: 0 2px 6px rgba(15,23,42,.06); }
+  .dp-service-card:hover, .dp-logo-circle:hover { transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dp-section *, .dp-section *::before, .dp-section *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 }

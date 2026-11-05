@@ -889,3 +889,11 @@
     transition: none;
   }
 }
+.cb-hero-section[data-active="false"] *, .cb-hero-section[data-active="false"] *::before, .cb-hero-section[data-active="false"] *::after { animation-play-state: paused !important; }
+@media (max-width: 768px), (pointer: coarse) {
+  .cb-pastel-orb { animation: none; filter: none; will-change: auto; opacity: .18; }
+  .cb-role-badge { animation: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cb-hero-section *, .cb-hero-section *::before, .cb-hero-section *::after { animation: none !important; transition: none !important; }
+}

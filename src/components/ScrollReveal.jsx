@@ -111,11 +111,12 @@ export default function ScrollReveal() {
 
     // Subtle Parallax Scroll for Ambient Background Shapes
     let ticking = false;
+    let scrollFrame;
+    const shapes = document.querySelectorAll('.ps-glow-shape, .glow-orb');
     const handleScrollParallax = () => {
       if (!ticking) {
-        requestAnimationFrame(() => {
+        scrollFrame = requestAnimationFrame(() => {
           const scrollY = window.scrollY;
-          const shapes = document.querySelectorAll('.ps-glow-shape, .glow-orb');
           shapes.forEach((shape, i) => {
             const speed = (i % 2 === 0) ? 0.05 : -0.04;
             shape.style.transform = `translate3d(0, ${scrollY * speed}px, 0)`;
@@ -126,13 +127,14 @@ export default function ScrollReveal() {
       }
     };
 
-    const isMobile = window.innerWidth < 768;
+    const isMobile = window.matchMedia('(max-width: 767px), (pointer: coarse), (prefers-reduced-motion: reduce)').matches;
     if (!isMobile) {
       window.addEventListener('scroll', handleScrollParallax, { passive: true });
     }
 
     return () => {
       clearTimeout(timer);
+      cancelAnimationFrame(scrollFrame);
       observer.disconnect();
       if (!isMobile) {
         window.removeEventListener('scroll', handleScrollParallax);

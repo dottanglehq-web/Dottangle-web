@@ -7792,3 +7792,7 @@ html, body, .site-header, .glass-card, .contact-form-card, .site-footer, .theme-
 @media (prefers-reduced-motion: reduce) { .contact-spinner { animation: none; } }
 .footer-phone-link { display: block; width: fit-content; margin-top: 12px; color: #e2e8f0; font-size: clamp(1rem, 2vw, 1.35rem); font-weight: 600; text-decoration: none; }
 .footer-phone-link:hover { color: #a78bfa; }
+
+@media (max-width: 768px), (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .ambient-glow-wrapper .glow-orb { animation: none; will-change: auto; }
+}

@@ -73,3 +73,9 @@ The service explorer keeps its sidebar and controlled search input mounted while
 Category counts come from `serviceCategories.length`. Four focused categories share the existing SEO, AI and custom-software overview records where applicable; search deduplicates shared records by service ID and preserves existing detail URLs. Each new offering exposes its eight scope items in the existing modal. Catalog entries describe services offered by the agency; the contact form continues to use only its two email jobs.
 
 Run `npm run test:services` for a production build, catalog assertions and Chromium desktop/mobile checks of typing/focus, all requested searches, clearing, no results, category count, scope lists and deep links.
+
+## Vercel production deployment
+
+`vercel.json` deploys the Vite assets plus `api/index.js`, which exposes the existing Express routes. Set MongoDB/SMTP/ADMIN_EMAIL and `SITE_ORIGIN` as backend production environment variables in Vercel. Local `.env` files are excluded from uploads. New inquiries schedule the same durable email worker via `waitUntil` after acknowledgement. A protected daily cron at 00:00 UTC (05:30 India time) retries queued jobs on Hobby; set a random `CRON_SECRET`. Frequent retries require the continuously running Express worker or an authorized external scheduler invoking `/api/notifications/retry` with its bearer secret. Do not assume a Vercel function's `setInterval` will run between requests.
+
+The phone's Contact app uses the same `ContactForm` and response handling as `/contact`. Run `npm run test:phone` to verify app order, all apps, retained state, mobile behavior, malformed response recovery, offscreen suspension, reduced motion, actual form persistence and synthetic interaction timing. See [PERFORMANCE_CONTACT_AUDIT.md](PERFORMANCE_CONTACT_AUDIT.md) for evidence and limits.

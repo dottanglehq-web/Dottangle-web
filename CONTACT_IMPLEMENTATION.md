@@ -13,7 +13,7 @@ The previous messaging provider dependency, imports, credentials, environment va
 | SMTP health | Live connection, authentication and TLS verified |
 | Email retries | Independent retry, concurrent claims, accepted-job skip and stale-claim reconciliation tested |
 | Thank You page | Preserved; desktop, tablet and mobile browser flows tested |
-| Validation and error handling | Ten backend integration tests pass; storage outage shows error without redirect |
+| Validation and error handling | Thirteen backend integration tests pass; storage outage shows error without redirect |
 | Calling number | Contact page/footer telephone links use +91 7973574376 |
 
 ## Live email-only test
@@ -22,10 +22,10 @@ On November 5, 2026, `node server/verify-live.js --send` saved inquiry `5d11d01a
 
 ## Checks and remaining deployment limits
 
-- `npm test`: ten integration tests covering real isolated MongoDB, authenticated local STARTTLS SMTP, exactly two email jobs, correct email recipients, independent retries, duplicate protection, validation and storage failures.
+- `npm test`: thirteen integration tests covering real isolated MongoDB, authenticated local STARTTLS SMTP, exactly two email jobs, correct email recipients, independent retries, duplicate protection, validation and storage failures.
 - `npm run test:browser`: production build and Chromium flows at desktop 1440×1000, tablet 768×1024, mobile 390×844, with persistence, telephone links, two-job assertion, thank-you redirect and home navigation.
 - `npm run smtp:verify`: live SMTP authentication and TLS passed.
 - The existing build chunk-size warning and two Vite/esbuild development-tool audit findings remain outside this change.
-- Local code and `.env` were updated. No remote deployment or remote environment changes were performed. Existing static-only Vercel hosting still needs an appropriate backend/worker deployment; see [README.md](README.md).
+- Deployed the production API and frontend to https://dottangel.vercel.app with backend environment variables and a protected daily retry cron. See [PERFORMANCE_CONTACT_AUDIT.md](PERFORMANCE_CONTACT_AUDIT.md) for the latest production verification.
 
 See [.env.example](.env.example) for the remaining MongoDB/SMTP/server configuration and [README.md](README.md) for startup, retries, tests and operation.

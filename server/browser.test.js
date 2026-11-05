@@ -38,7 +38,7 @@ try {
     await page.waitForURL('**/thank-you');
     await page.getByRole('heading',{name:'Thank You for Getting in Touch!'}).waitFor();
     assert.equal(new URL(page.url()).search,'');
-    assert.ok(await page.getByText('Your confirmation email is queued.').isVisible());
+    assert.ok(await page.getByText('A confirmation email will be sent to your registered email address.').isVisible());
     assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth));
     await page.screenshot({path:`test-results/thank-you-${label}.png`,fullPage:true});
     await page.getByRole('link',{name:'Back to Home'}).click();await page.waitForURL(base+'/');

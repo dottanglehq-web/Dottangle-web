@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { memo, useCallback, useState } from 'react';
 import Smartphone from './Smartphone';
 import { services } from './servicesData';
 import BrandLogo from './BrandLogos';
@@ -13,7 +13,7 @@ import './digital.css';
  * - Daylight theme soft pastel cards
  * - Smooth hover scale and elevation
  */
-function ServiceCard({ service, side, index, onSelect }) {
+const ServiceCard = memo(function ServiceCard({ service, side, index, onSelect }) {
   return (
     <button
       className={`dp-service-card dp-from-${side}`}
@@ -36,7 +36,7 @@ function ServiceCard({ service, side, index, onSelect }) {
       <i className="dp-card-arrow" aria-hidden="true">→</i>
     </button>
   );
-}
+});
 
 export default function DigitalServicesSection() {
   const [requested, setRequested] = useState(null);
