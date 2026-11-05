@@ -59,6 +59,10 @@ export default function ServicesPage() {
   });
 
   const [searchQuery, setSearchQuery] = useState('');
+  const [hasSelectedCategory, setHasSelectedCategory] = useState(() => {
+    const target = parseServicesPath().catSlug || searchParams.get('category');
+    return serviceCategories.some(category => category.id === target);
+  });
   const [categoriesOpen, setCategoriesOpen] = useState(false);
   const categoryToggleRef = useRef(null);
   const searchInputRef = useRef(null);
@@ -70,6 +74,7 @@ export default function ServicesPage() {
     const handlePopState = () => {
       const { catSlug, subSlug } = parseServicesPath();
       const targetCat = catSlug || 'ai-development';
+      setHasSelectedCategory(serviceCategories.some(category => category.id === catSlug));
       if (serviceCategories.some((c) => c.id === targetCat)) {
         setActiveCategoryId(targetCat);
       }
@@ -96,6 +101,7 @@ export default function ServicesPage() {
 
   // Smooth category select without page reload or jump
   const handleCategorySelect = (catId, shouldScroll = false) => {
+    setHasSelectedCategory(true);
     setCategoriesOpen(false);
     if (categoriesOpen) categoryToggleRef.current?.focus();
     if (catId === activeCategoryId && !searchQuery) {
@@ -117,6 +123,7 @@ export default function ServicesPage() {
 
   // Open detail modal with deep-linked URL update
   const handleSubServiceSelect = (sub, parentCatId = activeCategoryId) => {
+    setHasSelectedCategory(true);
     setActiveCategoryId(parentCatId);
     setSelectedSubService(sub);
     window.history.pushState({ serviceId: sub.id }, '', `/services/${parentCatId}/${sub.id}`);
@@ -132,7 +139,7 @@ export default function ServicesPage() {
   const visibleCategories = searchResults === null ? serviceCategories : serviceCategories.filter(cat => searchResults.some(sub => sub.categoryIds.includes(cat.id)));
 
   return (
-    <div className="sp-page">
+    <div className={`sp-page ${hasSelectedCategory ? '' : 'sp-awaiting-category'}`}>
       {/* Main Two-Column Service Explorer */}
       <section className="sp-explorer-section" id="service-explorer">
         <div className="container">
