@@ -1,4 +1,6 @@
 import nodemailer from 'nodemailer';
+import { fileURLToPath } from 'node:url';
+import { renderEmail, emailLinks, studioIntroduction } from './emailTemplate.js';
 export const businessEmail = 'dottanglehq@gmail.com';
 export function smtpTransport(env = process.env) {
   const user = env.SMTP_USER || env.SMTP_EMAIL;
@@ -11,13 +13,18 @@ export function smtpTransport(env = process.env) {
 }
 export const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 export const submissionTime = item => new Date(item.createdAt).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', timeZoneName: 'short' });
-const wrap = body => `<div style="background:#0c0e14;color:#e2e8f0;font:16px/1.7 Arial,sans-serif;max-width:620px;margin:auto;border-radius:16px;overflow:hidden"><div style="padding:24px;background:#6d28d9;color:white;font-size:26px;font-weight:bold">Dot Tangle</div><div style="padding:24px;overflow-wrap:anywhere">${body}</div><div style="padding:20px;color:#cbd5e1">Team Dot Tangle · ${businessEmail}</div></div>`;
+
 export function emailFor(item, channel, env = process.env) {
   const fields = { 'Customer Name': item.name, Email: item.email, Phone: item.phone, Company: item.company || 'Not provided', Service: item.services.join(', '), Subject: item.subject, Message: item.message, 'Submission Time': submissionTime(item), 'Submission ID': item.submissionId };
-  const text = channel === 'admin' ? `New Contact Form Submission\n\n${Object.entries(fields).map(([k,v]) => `${k}: ${v}`).join('\n')}` : `Hello ${item.name},\n\nThank you for contacting Dot Tangle!\n\nWe have successfully received your inquiry. Our team will review your requirements and shortly connect with you.\n\nWe appreciate your interest in our services and look forward to working with you.\n\nBest Regards,\nTeam Dot Tangle\n${businessEmail}`;
-  const html = channel === 'admin' ? wrap(`<h1 style="font-size:24px">New Contact Form Submission</h1><table style="width:100%;table-layout:fixed">${Object.entries(fields).map(([k,v]) => `<tr><th style="text-align:left;vertical-align:top;padding:10px;width:32%">${k}</th><td style="padding:10px;white-space:pre-wrap;overflow-wrap:anywhere">${escapeHtml(v)}</td></tr>`).join('')}</table>`) : wrap(text.split('\n\n').map(p => `<p>${escapeHtml(p).replace(/\n/g,'<br>')}</p>`).join(''));
+  const message = channel === 'admin' ? `New Contact Form Submission\n\n${Object.entries(fields).map(([k,v]) => `${k}: ${v}`).join('\n')}` : `Hello ${item.name},\n\nThank you for contacting Dot Tangle!\n\nWe have successfully received your inquiry. Our team will review your requirements and shortly connect with you.\n\nWe appreciate your interest in our services and look forward to working with you.\n\nBest Regards,\nTeam Dot Tangle\n${businessEmail}`;
+  const text = `${message}\n\nAbout Dottangle\n${studioIntroduction}\n\nWebsite: ${emailLinks.website}\nServices: ${emailLinks.services}\nInstagram: ${emailLinks.instagram}\nCall: +91 7973574376`;
+  const html = channel === 'admin'
+    ? renderEmail('New Contact Form Submission', `<p style="margin:0 0 18px">A new inquiry has arrived from your website. The complete details are below.</p><table width="100%" cellpadding="0" cellspacing="0" style="width:100%;table-layout:fixed;border-collapse:collapse">${Object.entries(fields).map(([k,v]) => `<tr><th class="email-label" scope="row" style="text-align:left;vertical-align:top;padding:12px 10px 12px 0;width:32%;border-bottom:1px solid #f1f5f9;font-size:12px;color:#64748b">${k}</th><td class="email-value" style="vertical-align:top;padding:12px 0;border-bottom:1px solid #f1f5f9;font-size:14px;color:#334155;white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-word">${escapeHtml(v)}</td></tr>`).join('')}</table>`)
+    : renderEmail('We have received your inquiry', message.split('\n\n').map(p => `<p style="margin:0 0 18px">${escapeHtml(p).replace(/\n/g,'<br>')}</p>`).join(''));
+
   return { from: env.SMTP_FROM || `Dot Tangle <${businessEmail}>`, to: channel === 'admin' ? env.ADMIN_EMAIL || businessEmail : item.email,
     replyTo: channel === 'admin' ? item.email : businessEmail, subject: channel === 'admin' ? `New Contact Form Submission — ${item.submissionId}` : 'Thank You for Contacting Dot Tangle!', text, html,
+    attachments: [{ filename: 'dottangle-logo.png', path: fileURLToPath(new URL('../public/dottangle-logo.png', import.meta.url)), cid: 'dottangle-logo@dottangle', contentDisposition: 'inline' }],
     messageId: `<${item.submissionId}.${channel}@dottangle.com>` };
 }
 export function notificationProviders(env = process.env) {

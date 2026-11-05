@@ -47,7 +47,13 @@ test('concurrent workers claim each job once and expired claims require reconcil
 });
 test('templates escape untrusted HTML and include every submitted field', async () => {
   const item=await Inquiry.findOne(); item.name='<img src=x onerror=alert(1)>';
-  const mail=emailFor(item,'admin',{}); assert.ok(mail.html.includes('&lt;img')); assert.ok(!mail.html.includes('<img')); assert.equal(mail.replyTo,data.email);
+  const mail=emailFor(item,'admin',{}); assert.ok(mail.html.includes('&lt;img')); assert.ok(!mail.html.includes('<img src=x'));
+  assert.ok(mail.html.includes('bgcolor="#ffffff"'));
+  assert.ok(mail.html.includes('cid:dottangle-logo@dottangle'));
+  assert.equal(mail.attachments[0].contentDisposition,'inline');
+  assert.ok(mail.html.includes('https://www.instagram.com/dottangle/'));
+  assert.ok(mail.text.includes('mobile apps'));
+  assert.ok(!mail.html.includes('#0c0e14')); assert.equal(mail.replyTo,data.email);
   for (const text of [data.phone,data.company,data.subject,data.message,item.submissionId,...data.services]) assert.ok(mail.text.includes(text));
   const confirmation = emailFor(item,'customer',{});
   assert.equal(confirmation.subject,'Thank You for Contacting Dot Tangle!');
@@ -61,7 +67,7 @@ test('real local SMTP accepts both emails over authenticated STARTTLS', async ()
   // Test fixture uses a self-signed certificate. Production always verifies certificates.
   const {default:nodemailer}=await import('nodemailer');
   const transport=nodemailer.createTransport({host:'127.0.0.1',port:smtp.server.address().port,secure:false,requireTLS:true,auth:{user:'test',pass:'fixture'},tls:{rejectUnauthorized:false}});
-  try { await transport.verify(); const item=await Inquiry.findOne(); for(const channel of ['admin','customer']){const result=await transport.sendMail(emailFor(item,channel,{})); assert.equal(result.accepted.length,1);} assert.equal(messages.length,2); assert.ok(messages[0].includes('New Contact Form Submission')); }
+  try { await transport.verify(); const item=await Inquiry.findOne(); for(const channel of ['admin','customer']){const result=await transport.sendMail(emailFor(item,channel,{})); assert.equal(result.accepted.length,1);} assert.equal(messages.length,2); assert.ok(messages[0].includes('New Contact Form Submission')); assert.ok(messages[0].includes('Content-ID: <dottangle-logo@dottangle>')); assert.ok(messages[1].includes('Content-Type: image/png'));  }
   finally { transport.close();await new Promise(r=>smtp.close(r)); }
 });
 test('unconfigured providers fail explicitly',async()=>{const item=await Inquiry.findOne();for(const c of ['admin','customer']) await assert.rejects(notificationProviders({})(item,c),{code:'PENDING_CONFIGURATION'});});
