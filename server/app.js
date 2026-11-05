@@ -3,6 +3,7 @@ import express from 'express';
 import rateLimit from 'express-rate-limit';
 import Inquiry from './models/Inquiry.js';
 import Newsletter from './models/Newsletter.js';
+import { isAllowedOrigin } from './origins.js';
 export function validateInquiry(body) {
   if (!body || typeof body !== 'object' || Array.isArray(body)) throw new Error('Invalid form.');
   const clean = (key, max, min = 0) => {
@@ -28,7 +29,7 @@ export function createApp({ Model = Inquiry, ready = () => true, env = process.e
   app.use(express.json({ limit: '32kb' }));
   app.use('/api', (req,res,next) => {
     res.set('Cache-Control','no-store');
-    if (req.method === 'POST' && req.get('origin') && req.get('origin') !== env.SITE_ORIGIN) return res.status(403).json({ error: 'Request origin is not allowed.' });
+    if (req.method === 'POST' && !isAllowedOrigin(req.get('origin'), env)) return res.status(403).json({ error: 'Request origin is not allowed.' });
     next();
   });
   const limiter = rateLimit({ windowMs: 15*60*1000, limit: 5, standardHeaders: 'draft-8', legacyHeaders: false, message: { error: 'Too many requests. Please try again in 15 minutes.' } });

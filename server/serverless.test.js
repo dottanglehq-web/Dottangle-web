@@ -37,3 +37,12 @@ test('serverless database outage returns JSON failure',async()=>{
  const handler=createServerlessHandler({connect:async()=>{throw new Error();},schedule:()=>{},send:async()=>{},env:{}});
  const server=createServer(handler).listen(0);await once(server,'listening');try{const r=await fetch(`http://localhost:${server.address().port}/api/health`);assert.equal(r.status,503);assert.equal((await r.json()).status,'storage_unavailable');}finally{await new Promise(r=>server.close(r));}
 });
+
+
+test('business domains, configured origins and deployment URLs are allowed without a wildcard', async () => {
+ const { isAllowedOrigin } = await import('./origins.js');
+ const env = { SITE_ORIGIN:'https://dottangel.vercel.app/', ALLOWED_ORIGINS:' https://www.example.com/ , http://localhost:3000 ', VERCEL_URL:'fixture-project.vercel.app' };
+ for (const origin of ['https://dottangle.vercel.app','https://dottangel.vercel.app','https://www.example.com','http://localhost:3000','https://fixture-project.vercel.app']) assert.equal(isAllowedOrigin(origin,env),true,origin);
+ for (const origin of ['https://evil.example','https://dottangle.vercel.app.evil.example','https://other-tenant.vercel.app','null','garbage']) assert.equal(isAllowedOrigin(origin,env),false,origin);
+ assert.equal(isAllowedOrigin(undefined,env),true);
+});
