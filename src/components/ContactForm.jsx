@@ -68,7 +68,7 @@ export default function ContactForm({ compact = false }) {
 
   return (
               <form aria-busy={isSubmitting} id="contactMessageForm" onSubmit={handleSubmit} className={`contact-form-grid ${compact ? 'contact-form-compact' : ''}`}>
-                
+
                 {/* Row 1: Your Name & Company */}
                 <div className="contact-field-group">
                   <label className="contact-field-label" htmlFor="contactName">Your Name</label>
