@@ -33,8 +33,11 @@ export default function Footer() {
 
           <div className="footer-email-col">
             <span className="footer-inquiries-label">NEW BUSINESS INQUIRIES</span>
-            <a href="mailto:hello@dottangle.com" className="footer-email-link">
-              hello@dottangle.com ↗
+            <a href="mailto:dottanglehq@gmail.com" className="footer-email-link">
+              dottanglehq@gmail.com ↗
+            </a>
+            <a href="tel:+917973574376" className="footer-phone-link" aria-label="Call Dottangle at +91 7973574376">
+              +91 7973574376 ↗
             </a>
           </div>
         </div>
@@ -76,13 +79,13 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a href="https://wa.me/917717453630" target="_blank" rel="noopener noreferrer">
-                  WhatsApp Direct (+91 77174 53630) ↗
+                <a href="tel:+917973574376">
+                  Call +91 7973574376 ↗
                 </a>
               </li>
               <li>
-                <a href="mailto:hello@dottangle.com">
-                  hello@dottangle.com ↗
+                <a href="mailto:dottanglehq@gmail.com">
+                  dottanglehq@gmail.com ↗
                 </a>
               </li>
             </ul>

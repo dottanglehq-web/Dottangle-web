@@ -58,6 +58,13 @@ export default function ServiceDetailModal({ service, category, onClose }) {
             <p className="sd-text">
               We design, architect, and deploy production-grade {service.title.toLowerCase()} tailored to your precise operational specifications. We guarantee seamless integration, high security standards, and comprehensive post-launch documentation.
             </p>
+            {service.deliverables ? (
+              <div className="sd-deliverables-grid">
+                {service.deliverables.map(item => <div className="sd-deliverable-item" key={item}>
+                  <CheckCircle size={18} className="sd-check" /><div>{item}</div>
+                </div>)}
+              </div>
+            ) : (
             <div className="sd-deliverables-grid">
               <div className="sd-deliverable-item">
                 <CheckCircle size={18} className="sd-check" />
@@ -84,6 +91,7 @@ export default function ServiceDetailModal({ service, category, onClose }) {
                 </div>
               </div>
             </div>
+            )}
           </div>
 
           {/* Section 2: Key Business Benefits */}

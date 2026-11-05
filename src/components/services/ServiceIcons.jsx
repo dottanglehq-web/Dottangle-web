@@ -19,7 +19,9 @@ import {
   Truck,
   Rocket,
   Cog,
-  Compass
+  Compass,
+  MessageCircle,
+  Code2
 } from 'lucide-react';
 
 const iconMap = {
@@ -42,13 +44,16 @@ const iconMap = {
   Truck,
   Rocket,
   Cog,
-  Compass
+  Compass,
+  MessageCircle,
+  Code2
 };
 
 /**
  * Recognizable Tech Brand SVG Logos & Dynamic Lucide Icon Resolver
  */
 export function TechLogo({ iconKey, size = 32, className = '' }) {
+  if (iconMap[iconKey]) { const Icon = iconMap[iconKey]; return <Icon size={size} className={className} />; }
   switch (iconKey) {
     case 'apple':
       return (

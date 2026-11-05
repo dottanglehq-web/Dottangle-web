@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import {
   Search,
@@ -19,6 +19,7 @@ import { TechLogo, CategoryIcon } from '../components/services/ServiceIcons';
 import OfficialTechLogo from '../components/services/OfficialTechLogos';
 import ServiceDetailModal from '../components/services/ServiceDetailModal';
 import './ServicesPage.css';
+import { searchServices } from '../data/serviceSearch';
 
 /**
  * Robust path parser for /services, /services/:categorySlug, and /services/:categorySlug/:serviceSlug
@@ -57,6 +58,8 @@ export default function ServicesPage() {
   });
 
   const [searchQuery, setSearchQuery] = useState('');
+  const searchInputRef = useRef(null);
+  const clearSearch = () => { setSearchQuery(''); searchInputRef.current?.focus(); };
   const [activeTechTab, setActiveTechTab] = useState('AI & Machine Learning');
 
   // Synchronize browser history and deep links smoothly without unmounting or reloading
@@ -109,6 +112,7 @@ export default function ServicesPage() {
 
   // Open detail modal with deep-linked URL update
   const handleSubServiceSelect = (sub, parentCatId = activeCategoryId) => {
+    setActiveCategoryId(parentCatId);
     setSelectedSubService(sub);
     window.history.pushState({ serviceId: sub.id }, '', `/services/${parentCatId}/${sub.id}`);
   };
@@ -119,82 +123,15 @@ export default function ServicesPage() {
     window.history.pushState({ categoryId: activeCategoryId }, '', `/services/${activeCategoryId}`);
   };
 
-  // Global search filtering across all sub-services
-  const searchResults = useMemo(() => {
-    if (!searchQuery.trim()) return null;
-    const q = searchQuery.toLowerCase().trim();
-    const results = [];
-    serviceCategories.forEach((cat) => {
-      cat.subServices.forEach((sub) => {
-        if (
-          sub.title.toLowerCase().includes(q) ||
-          sub.shortDesc.toLowerCase().includes(q) ||
-          sub.tech.toLowerCase().includes(q) ||
-          cat.name.toLowerCase().includes(q)
-        ) {
-          results.push({ ...sub, categoryName: cat.name, categoryId: cat.id });
-        }
-      });
-    });
-    return results;
-  }, [searchQuery]);
+  const searchResults = useMemo(() => searchServices(serviceCategories, searchQuery), [searchQuery]);
+  const visibleCategories = searchResults === null ? serviceCategories : serviceCategories.filter(cat => searchResults.some(sub => sub.categoryIds.includes(cat.id)));
 
   return (
     <div className="sp-page">
       {/* Main Two-Column Service Explorer */}
       <section className="sp-explorer-section" id="service-explorer">
         <div className="container">
-          {/* If actively searching, show search results view */}
-          {searchResults ? (
-            <div className="sp-search-results-view">
-              <div className="sp-search-header">
-                <h3>
-                  Search Results for &ldquo;{searchQuery}&rdquo;
-                  <span className="sp-results-count">({searchResults.length} matches found)</span>
-                </h3>
-                <button className="btn btn-glass" onClick={() => setSearchQuery('')}>
-                  Clear Search
-                </button>
-              </div>
-
-              {searchResults.length === 0 ? (
-                <div className="sp-no-results">
-                  <p>No direct matches found for &ldquo;{searchQuery}&rdquo;.</p>
-                  <p className="sp-text-muted">Try searching for &quot;AI&quot;, &quot;Mobile&quot;, &quot;SEO&quot;, &quot;React&quot;, &quot;Cloud&quot;, or &quot;ERP&quot;.</p>
-                </div>
-              ) : (
-                <div className="sp-cards-grid">
-                  {searchResults.map((sub, idx) => (
-                    <div
-                      key={sub.id}
-                      className="sp-service-card"
-                      style={{ '--card-delay': `${Math.min(idx * 30, 240)}ms` }}
-                      onClick={() => handleSubServiceSelect(sub, sub.categoryId)}
-                      role="button"
-                      tabIndex={0}
-                    >
-                      <div className="sp-card-icon-box">
-                        <TechLogo iconKey={sub.iconKey} size={28} />
-                      </div>
-                      <div className="sp-card-content">
-                        <div className="sp-card-parent-tag">{sub.categoryName}</div>
-                        <h4 className="sp-card-title">{sub.title}</h4>
-                        <p className="sp-card-desc">{sub.shortDesc}</p>
-                        <div className="sp-card-tech-meta">{sub.tech}</div>
-                      </div>
-                      <div className="sp-card-cta-action">
-                        <span>Explore Capabilities</span>
-                        <ArrowRight size={15} />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          ) : (
-            /* Main Two-Column Explorer Layout */
-            <div className="sp-explorer-layout">
-              {/* LEFT SIDEBAR: Sticky Vertical Navigation */}
+          <div className="sp-explorer-layout">
               <aside className="sp-sidebar">
                 <div className="sp-sidebar-header">
                   <span className="sp-sidebar-title">Service Categories</span>
@@ -207,6 +144,7 @@ export default function ServicesPage() {
                   <input
                     type="text"
                     placeholder="Search capabilities..."
+                    ref={searchInputRef}
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     aria-label="Search services"
@@ -214,7 +152,7 @@ export default function ServicesPage() {
                   {searchQuery && (
                     <button
                       className="sp-sidebar-search-clear"
-                      onClick={() => setSearchQuery('')}
+                      onClick={clearSearch}
                       aria-label="Clear search"
                     >
                       &times;
@@ -223,7 +161,7 @@ export default function ServicesPage() {
                 </div>
 
                 <nav className="sp-sidebar-nav" aria-label="Service categories navigation">
-                  {serviceCategories.map((cat) => {
+                  {visibleCategories.map((cat) => {
                     const isActive = activeCategoryId === cat.id;
                     return (
                       <button
@@ -246,8 +184,54 @@ export default function ServicesPage() {
                   })}
                 </nav>
               </aside>
+            {searchResults !== null ? (
+            <div className="sp-search-results-view">
+              <div className="sp-search-header">
+                <h3>
+                  Search Results for &ldquo;{searchQuery}&rdquo;
+                  <span className="sp-results-count">({searchResults.length} matches found)</span>
+                </h3>
+                <button className="btn btn-glass" onClick={clearSearch}>
+                  Clear Search
+                </button>
+              </div>
 
-              {/* RIGHT CONTENT AREA: Keyed by category id to trigger smooth CSS entrance animation */}
+              {searchResults.length === 0 ? (
+                <div className="sp-no-results">
+                  <p>No services found for &ldquo;{searchQuery}&rdquo;.</p>
+                  <p className="sp-text-muted">Try searching for &quot;AI&quot;, &quot;Mobile&quot;, &quot;SEO&quot;, &quot;React&quot;, &quot;Cloud&quot;, or &quot;ERP&quot;.</p>
+                </div>
+              ) : (
+                <div className="sp-cards-grid">
+                  {searchResults.map((sub, idx) => (
+                    <div
+                      key={sub.id}
+                      className="sp-service-card"
+                      style={{ '--card-delay': `${Math.min(idx * 30, 240)}ms` }}
+                      onClick={() => handleSubServiceSelect(sub, sub.categoryId)}
+                      onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleSubServiceSelect(sub, sub.categoryId); } }}
+                      role="button"
+                      tabIndex={0}
+                    >
+                      <div className="sp-card-icon-box">
+                        <TechLogo iconKey={sub.iconKey} size={28} />
+                      </div>
+                      <div className="sp-card-content">
+                        <div className="sp-card-parent-tag">{sub.categoryName}</div>
+                        <h4 className="sp-card-title">{sub.title}</h4>
+                        <p className="sp-card-desc">{sub.shortDesc}</p>
+                        <div className="sp-card-tech-meta">{sub.tech}</div>
+                      </div>
+                      <div className="sp-card-cta-action">
+                        <span>Explore Capabilities</span>
+                        <ArrowRight size={15} />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+            ) : (
               <main className="sp-content-area" key={activeCategory.id}>
                 {/* Selected Category Header Banner */}
                 <div className="sp-category-header">
@@ -320,8 +304,8 @@ export default function ServicesPage() {
                   ))}
                 </div>
               </main>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </section>
 

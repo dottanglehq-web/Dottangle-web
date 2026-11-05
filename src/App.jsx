@@ -12,6 +12,7 @@ import WorkPage from './pages/WorkPage';
 import ProcessPage from './pages/ProcessPage';
 import PricingPage from './pages/PricingPage';
 import ContactPage from './pages/ContactPage';
+import ThankYouPage from './pages/ThankYouPage';
 
 export default function App() {
   return (
@@ -42,6 +43,7 @@ export default function App() {
           <Route path="/process" element={<ProcessPage />} />
           <Route path="/pricing" element={<PricingPage />} />
           <Route path="/contact" element={<ContactPage />} />
+          <Route path="/thank-you" element={<ThankYouPage />} />
           <Route path="*" element={<HomePage />} />
         </Routes>
       </main>

@@ -140,7 +140,7 @@ export const GLOBAL_HUBS = [
     lon: 77.2090,
     tag: 'Central Engineering Labs HQ',
     accent: '#FB923C',
-    clientProject: 'Saarthi Design & Engineering Labs',
+    clientProject: 'Dottangle Design & Engineering Labs',
     scope: 'Core 3D WebGL, Full-Stack MERN & AI Engineering',
     impact: '100% In-House Senior Architects · Zero Middlemen',
     stack: ['Senior Tech Leads', 'WebGL Craftsmen', 'Growth Strategists'],

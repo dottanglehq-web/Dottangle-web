@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 
 /**
- * Saarthi Interactive 3D Dither Globe Component
+ * Dottangle Interactive 3D Dither Globe Component
  * Features:
  * - High-contrast procedural continental dither particles (Americas, Europe, MENA, India, APAC)
  * - Starts oriented directly towards Europe / Middle East / India so continents are immediately visible

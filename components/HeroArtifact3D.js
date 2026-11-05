@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 
 /**
- * Saarthi — High-Tech Interactive 3D Quantum Engine
+ * Dottangle — High-Tech Interactive 3D Quantum Engine
  * Features:
  * - Concentric Gyroscopic Tech Orbital Rings with satellite data nodes
  * - Central Holographic Quantum Core (Torus Knot / Hyper-Lattice / Neural Sphere)

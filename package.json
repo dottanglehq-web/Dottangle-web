@@ -7,10 +7,17 @@
     "dev": "vite",
     "server": "node server/server.js",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "node --test server/contact.test.js",
+    "smtp:verify": "node server/verify-smtp.js",
+    "test:browser": "npm run build && node server/browser.test.js",
+    "test:services": "npm run build && node tests/services.test.js"
   },
   "devDependencies": {
+    "@playwright/test": "^1.64.1",
+    "mongodb-memory-server": "^11.3.0",
     "sharp": "^0.35.5",
+    "smtp-server": "^3.21.3",
     "vite": "^5.4.2"
   },
   "dependencies": {
@@ -18,13 +25,13 @@
     "cors": "^2.8.6",
     "dotenv": "^18.0.8",
     "express": "^5.3.0",
+    "express-rate-limit": "^8.7.3",
     "lucide-react": "^1.67.0",
     "mongoose": "^9.11.2",
     "nodemailer": "^10.2.1",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
     "react-router-dom": "^7.18.4",
-    "three": "^0.186.1",
-    "update": "^0.7.4"
+    "three": "^0.186.1"
   }
 }

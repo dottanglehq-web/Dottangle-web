@@ -107,7 +107,7 @@ export const serviceCategories = [
         id: 'voice-ai-assistants',
         title: 'Voice AI Assistants',
         shortDesc: 'Ultra-low-latency real-time voice agents for customer dispatch, phone bookings, and support.',
-        tech: 'Whisper, ElevenLabs, WebRTC, Twilio',
+        tech: 'Whisper, ElevenLabs, WebRTC',
         iconKey: 'mic'
       },
       {
@@ -599,7 +599,7 @@ export const serviceCategories = [
         id: 'crm-development',
         title: 'CRM Development',
         shortDesc: 'Custom customer relationship platforms with pipeline stages, call recording, and automated lead routing.',
-        tech: 'WebSockets, REST, Twilio, SendGrid',
+        tech: 'WebSockets, REST, SendGrid',
         iconKey: 'contact'
       },
       {
@@ -772,7 +772,7 @@ export const serviceCategories = [
         id: 'order-management',
         title: 'Order Management Systems',
         shortDesc: 'Automated invoice generation, courier label printing, return authorizations, and tracking SMS cascades.',
-        tech: 'ShipStation, Shiprocket, Twilio',
+        tech: 'ShipStation, Shiprocket',
         iconKey: 'truck'
       },
       {
@@ -1466,6 +1466,34 @@ export const serviceCategories = [
     ]
   }
 ];
+
+
+// Focused category views share existing overview records to avoid duplicate services.
+const focusedCategories = [
+  { id: 'seo-optimization', name: 'SEO Optimization', iconName: 'TrendingUp', existingId: 'seo-dominance',
+    description: 'Improve website visibility, organic traffic, Google rankings, and search engine performance through comprehensive SEO strategies.',
+    keywords: ['SEO', 'SCO', 'Search Engine Optimization', 'Google Ranking', 'Technical SEO', 'On-Page SEO', 'Off-Page SEO'],
+    deliverables: ['Technical SEO', 'On-page SEO', 'Off-page SEO', 'Keyword research', 'Website audits', 'Core Web Vitals optimization', 'Local SEO', 'SEO analytics and reporting'], tech: 'Google Search Console, Analytics, Core Web Vitals' },
+  { id: 'whatsapp-integration', name: 'WhatsApp Integration', iconName: 'MessageCircle',
+    description: 'Integrate WhatsApp Business messaging into websites and applications to automate customer communication, notifications, and support workflows.',
+    keywords: ['WhatsApp', 'WhatsApp API', 'Business Messaging', 'Chat Automation', 'WhatsApp Integration'],
+    deliverables: ['WhatsApp Business API integration', 'Automated notifications', 'Contact form notifications', 'Customer support automation', 'Chatbot integration', 'Lead management', 'Message templates', 'CRM integration'], tech: 'WhatsApp Business API, Webhooks, CRM' },
+  { id: 'ai-integration', name: 'AI Integration', iconName: 'Cpu', existingId: 'ai-integration',
+    description: 'Transform business operations using AI-powered automation, intelligent assistants, machine learning, and advanced AI integrations.',
+    keywords: ['AI', 'Artificial Intelligence', 'AI Automation', 'AI Chatbot', 'Machine Learning', 'LLM'],
+    deliverables: ['AI chatbot development', 'OpenAI API integration', 'AI agents and automation', 'Machine learning integration', 'AI-powered customer support', 'Document processing', 'Workflow automation', 'Custom AI solutions'], tech: 'OpenAI API, LLMs, Machine Learning, REST APIs' },
+  { id: 'custom-software-development', name: 'Custom Software Development', iconName: 'Code2', existingId: 'custom-software-dev',
+    description: 'Build scalable, secure, and customized software solutions tailored to specific business requirements and workflows.',
+    keywords: ['Custom Software', 'Software Development', 'Web Applications', 'Enterprise Software', 'SaaS', 'Backend Development'],
+    deliverables: ['Custom web application development', 'Enterprise software development', 'SaaS platform development', 'Backend and API development', 'Database architecture', 'Business management systems', 'ERP and CRM solutions', 'Software maintenance and support'], tech: 'React, Node.js, Databases, APIs, SaaS' }
+];
+for (const spec of focusedCategories) {
+  const existing = spec.existingId && serviceCategories.flatMap(cat => cat.subServices).find(sub => sub.id === spec.existingId);
+  if (spec.existingId && !existing) throw new Error('Missing existing service: ' + spec.existingId);
+  const overview = existing || { id: spec.id + '-overview' };
+  Object.assign(overview, { title: spec.name, shortDesc: spec.description, tech: spec.tech, iconKey: spec.iconName, keywords: spec.keywords, deliverables: spec.deliverables });
+  serviceCategories.push({ id: spec.id, name: spec.name, shortName: spec.name, iconName: spec.iconName, description: spec.description, tagline: spec.description, keywords: spec.keywords, subServices: [overview] });
+}
 
 export const technologiesData = [
   {

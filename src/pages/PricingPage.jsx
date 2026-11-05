@@ -81,7 +81,7 @@ export default function PricingPage() {
           </div>
           <h1 className="hero-title">
             Choose the right way<br />
-            <span className="serif-italic gradient-coral-text">to partner with Saarthi.</span>
+            <span className="serif-italic gradient-coral-text">to partner with Dottangle.</span>
           </h1>
           <p className="hero-description mx-auto" style={{ maxWidth: '640px' }}>
             Every engagement is scoped transparently around your exact business inflection point and growth objectives. Zero hidden fees.

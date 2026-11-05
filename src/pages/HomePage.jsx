@@ -11,8 +11,8 @@ export default function HomePage() {
 
   const faqs = [
     {
-      q: "What makes Saarthi different from traditional agencies?",
-      a: "Unlike traditional agencies that pass your project through layers of junior account reps, at Saarthi you work directly with senior designers and engineers. We keep our client roster small so every project gets dedicated focus, direct communication, and rapid turnaround."
+      q: "What makes Dottangle different from traditional agencies?",
+      a: "Unlike traditional agencies that pass your project through layers of junior account reps, at Dottangle you work directly with senior designers and engineers. We keep our client roster small so every project gets dedicated focus, direct communication, and rapid turnaround."
     },
     {
       q: "How long does a typical project take from start to launch?",
@@ -74,7 +74,7 @@ export default function HomePage() {
                 <div className="studio-mosaic-card card-team glass-card">
                   <img 
                     src="./images/agency-team.jpg" 
-                    alt="Saarthi Engineering & Growth Team" 
+                    alt="Dottangle Engineering & Growth Team"
                     loading="lazy"
                   />
                 </div>
@@ -109,7 +109,7 @@ export default function HomePage() {
               </h2>
 
               <p className="studio-lead-text">
-                Saarthi helps brands thrive in today's digital-first world by blending creativity, strategy, and technology. As a trusted premier Digital Marketing & Web Engineering Agency, we craft impactful digital experiences—from branding and UI/UX to web design and marketing solutions—that engage audiences, strengthen brand identity, and drive measurable growth.
+                Dottangle helps brands thrive in today's digital-first world by blending creativity, strategy, and technology. As a trusted premier Digital Marketing & Web Engineering Agency, we craft impactful digital experiences—from branding and UI/UX to web design and marketing solutions—that engage audiences, strengthen brand identity, and drive measurable growth.
               </p>
 
               <p className="studio-body-text">

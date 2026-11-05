@@ -1286,3 +1286,17 @@
   }
 }
 
+
+/* Keep the existing explorer responsive while its sidebar stays mounted during search. */
+.sp-search-results-view { min-width: 0; }
+.sp-search-header { gap: 16px; flex-wrap: wrap; }
+.sp-search-header h3 { min-width: 0; overflow-wrap: anywhere; }
+.sp-search-header button { flex-shrink: 0; }
+@media (max-width: 640px) {
+  .sp-search-results-view { padding: 18px; }
+  .sp-search-results-view .sp-service-card { padding: 18px; gap: 12px; }
+  .sp-results-count { display: block; margin-left: 0; margin-top: 6px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sp-service-card, .sp-content-area { animation: none; }
+}

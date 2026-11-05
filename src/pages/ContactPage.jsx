@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useState, useEffect, useRef } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export default function ContactPage() {
   const location = useLocation();
-  const [submitted, setSubmitted] = useState(false);
+  const navigate = useNavigate();
+  const busy = useRef(false);
+  const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
@@ -11,6 +13,8 @@ export default function ContactPage() {
     phone: '',
     email: '',
     subject: '',
+    services: [],
+    website: '',
     message: ''
   });
 
@@ -27,13 +31,13 @@ export default function ContactPage() {
       setFormData(prev => ({
         ...prev,
         subject: `Inquiry regarding ${plan} Plan`,
-        message: `Hi Saarthi team, I would like to explore the ${plan} engagement scope for our company.`
+        message: `Hi Dot Tangle team, I would like to explore the ${plan} engagement scope for our company.`
       }));
     } else if (service) {
       setFormData(prev => ({
         ...prev,
         subject: `New Project: ${service}`,
-        message: `Hi Saarthi team, we are looking for high-performance capabilities in ${service}.`
+        message: `Hi Dot Tangle team, we are looking for high-performance capabilities in ${service}.`
       }));
     }
   }, [location.search]);
@@ -45,21 +49,25 @@ export default function ContactPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (busy.current) return;
+    busy.current = true;
+    setError('');
     setIsSubmitting(true);
     try {
       const res = await fetch('/api/inquiries', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(formData),
+        signal: AbortSignal.timeout(20000)
       });
-      if (res.ok) {
-        setSubmitted(true);
-      } else {
-        setSubmitted(true); // Graceful fallback UI
-      }
+      const result = await res.json();
+      if (!res.ok || !result.success) throw new Error(result.error || 'We could not save your inquiry. Please try again.');
+      try { sessionStorage.setItem('contactConfirmation', result.confirmationStatus || 'pending'); } catch { /* Storage can be disabled by browser privacy settings. */ }
+      navigate('/thank-you', { replace: true });
     } catch (err) {
-      setSubmitted(true);
+      setError(err.name === 'TimeoutError' || err.name === 'TypeError' ? 'Connection interrupted. Please retry; duplicate inquiries are prevented.' : err.message);
     } finally {
+      busy.current = false;
       setIsSubmitting(false);
     }
   };
@@ -79,9 +87,9 @@ export default function ContactPage() {
       )
     },
     {
-      name: 'WhatsApp Direct',
-      handle: '+91 77174 53630',
-      url: 'https://wa.me/917717453630?text=Hi%20the%20oblique%2C%20I%20want%20to%20discuss%20a%20project',
+      name: 'Call Dot Tangle',
+      handle: '+91 7973574376',
+      url: 'tel:+917973574376',
       iconClass: 'icon-wa',
       icon: (
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -113,27 +121,7 @@ export default function ContactPage() {
           
           {/* Main Focus: The Form ("main toh mujhe ye form hi h") */}
           <div className="contact-form-card">
-            {submitted ? (
-              <div className="contact-success-state">
-                <div className="contact-success-icon">✓</div>
-                <h2 style={{ fontSize: '1.6rem', color: 'var(--text-main, #ffffff)', marginBottom: '12px' }}>Message Successfully Delivered!</h2>
-                <p style={{ color: 'var(--text-body, #94a3b8)', fontSize: '1rem', maxWidth: '520px', margin: '0 auto 28px auto', lineHeight: 1.6 }}>
-                  Thank you, <strong>{formData.name}</strong>. Our team in Ludhiana has received your brief and will connect with you at <strong>{formData.email}</strong> within 24 hours.
-                </p>
-                <button
-                  type="button"
-                  className="contact-submit-btn"
-                  style={{ maxWidth: '280px', margin: '0 auto' }}
-                  onClick={() => {
-                    setSubmitted(false);
-                    setFormData({ name: '', company: '', phone: '', email: '', subject: '', message: '' });
-                  }}
-                >
-                  Send Another Message
-                </button>
-              </div>
-            ) : (
-              <form id="contactMessageForm" onSubmit={handleSubmit} className="contact-form-grid">
+              <form aria-busy={isSubmitting} id="contactMessageForm" onSubmit={handleSubmit} className="contact-form-grid">
                 
                 {/* Row 1: Your Name & Company */}
                 <div className="contact-field-group">
@@ -143,6 +131,8 @@ export default function ContactPage() {
                     name="name"
                     type="text"
                     required
+                    minLength={2}
+                    maxLength={120}
                     value={formData.name}
                     onChange={handleChange}
                     placeholder="Enter Your Full Name"
@@ -156,6 +146,7 @@ export default function ContactPage() {
                     id="contactCompany"
                     name="company"
                     type="text"
+                    maxLength={160}
                     value={formData.company}
                     onChange={handleChange}
                     placeholder="Company"
@@ -170,6 +161,9 @@ export default function ContactPage() {
                     id="contactPhone"
                     name="phone"
                     type="tel"
+                    required
+                    pattern="[+0-9 ()-]{7,30}"
+                    maxLength={30}
                     value={formData.phone}
                     onChange={handleChange}
                     placeholder="Enter Your Phone Number"
@@ -184,6 +178,7 @@ export default function ContactPage() {
                     name="email"
                     type="email"
                     required
+                    maxLength={254}
                     value={formData.email}
                     onChange={handleChange}
                     placeholder="Enter Your Email Address"
@@ -191,6 +186,19 @@ export default function ContactPage() {
                   />
                 </div>
 
+                <div className="contact-field-group contact-field-full">
+                  <label className="contact-field-label" htmlFor="contactService">Selected Service</label>
+                  <select id="contactService" required className="contact-input" value={formData.services[0] || ''}
+                    onChange={e => setFormData(prev => ({ ...prev, services: [e.target.value] }))}>
+                    <option value="">Select a service</option>
+                    {['Website Development', 'Mobile App Development', 'AI & Automation', 'Branding & Design', 'Digital Marketing', 'Cloud & Consulting', 'Other'].map(service => <option key={service}>{service}</option>)}
+                  </select>
+                </div>
+                <div className="contact-honeypot" aria-hidden="true">
+                  <label htmlFor="contactWebsite">Leave this field empty</label>
+                  <input id="contactWebsite" name="website" tabIndex={-1} autoComplete="off" value={formData.website} onChange={handleChange} />
+                </div>
+                {error && <p role="alert" className="contact-field-full" style={{ color: '#f87171' }}>{error}</p>}
                 {/* Row 3: Subject (Full Width) */}
                 <div className="contact-field-group contact-field-full">
                   <label className="contact-field-label" htmlFor="contactSubject">Subject</label>
@@ -198,6 +206,9 @@ export default function ContactPage() {
                     id="contactSubject"
                     name="subject"
                     type="text"
+                    required
+                    minLength={2}
+                    maxLength={200}
                     value={formData.subject}
                     onChange={handleChange}
                     placeholder="Tell Your Subject"
@@ -213,6 +224,8 @@ export default function ContactPage() {
                     name="message"
                     required
                     rows={5}
+                    minLength={10}
+                    maxLength={4000}
                     value={formData.message}
                     onChange={handleChange}
                     placeholder="Message"
@@ -227,11 +240,11 @@ export default function ContactPage() {
                   className="contact-submit-btn"
                   id="contactSubmitBtn"
                 >
-                  <span>{isSubmitting ? 'Sending Message...' : 'Send Message'}</span>
+                  {isSubmitting && <span className="contact-spinner" aria-hidden="true" />}
+                  <span aria-live="polite">{isSubmitting ? 'Sending Message...' : 'Send Message'}</span>
                 </button>
 
               </form>
-            )}
           </div>
 
           {/* Alongside Column: Companion Info & Socials ("saath saath mei rkh deta... kamm rkh") */}
@@ -252,9 +265,14 @@ export default function ContactPage() {
               <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', borderTop: '1px solid var(--border-subtle, rgba(255, 255, 255, 0.08))', paddingTop: '16px' }}>
                 <div>
                   <div style={{ fontSize: '0.7rem', color: 'var(--text-muted, #64748b)', fontWeight: 700, textTransform: 'uppercase' }}>Direct Email</div>
-                  <a href="mailto:theobligue@gmail.com" style={{ color: 'var(--text-main, #ffffff)', fontWeight: 600, fontSize: '0.92rem', textDecoration: 'none', display: 'inline-block', marginTop: '2px' }}>
-                    theobligue@gmail.com ↗
+                  <a href="mailto:dottanglehq@gmail.com" style={{ color: 'var(--text-main, #ffffff)', fontWeight: 600, fontSize: '0.92rem', textDecoration: 'none', display: 'inline-block', marginTop: '2px' }}>
+                    dottanglehq@gmail.com ↗
                   </a>
+                </div>
+
+                <div>
+                  <div style={{ fontSize: '0.7rem', color: 'var(--text-muted, #64748b)', fontWeight: 700, textTransform: 'uppercase' }}>Call Us</div>
+                  <a href="tel:+917973574376" style={{ color: 'var(--text-main, #ffffff)', fontWeight: 600, fontSize: '0.92rem', textDecoration: 'none', display: 'inline-block', marginTop: '2px' }}>+91 7973574376 ↗</a>
                 </div>
 
                 <div>
@@ -270,20 +288,20 @@ export default function ContactPage() {
               </div>
             </div>
 
-            {/* WhatsApp Direct Card */}
-            <div className="contact-info-glass-card whatsapp-sidebar-card">
+            {/* Call Dot Tangle Card */}
+            <div className="contact-info-glass-card calling-sidebar-card">
               <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '8px' }}>
                 <span style={{ fontSize: '1.4rem' }}>💬</span>
                 <div>
-                  <h4 style={{ fontSize: '1.05rem', color: 'var(--text-main, #ffffff)', margin: 0 }}>Prefer WhatsApp?</h4>
+                  <h4 style={{ fontSize: '1.05rem', color: 'var(--text-main, #ffffff)', margin: 0 }}>Prefer a call?</h4>
                   <span style={{ fontSize: '0.75rem', color: '#10b981', fontWeight: 600 }}>Fast response within 30 minutes</span>
                 </div>
               </div>
               <p style={{ color: 'var(--text-muted, #94a3b8)', fontSize: '0.84rem', lineHeight: 1.5, marginBottom: '14px' }}>
-                Drop our studio a message on WhatsApp for rapid scoping questions and voice notes.
+                Call +91 7973574376 to discuss your project with our team.
               </p>
               <a
-                href="https://wa.me/917717453630?text=Hi%20the%20oblique%2C%20I%20want%20to%20discuss%20a%20project"
+                href="tel:+917973574376"
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{
@@ -302,7 +320,7 @@ export default function ContactPage() {
                   transition: 'all 0.25s ease'
                 }}
               >
-                <span>Message on WhatsApp</span>
+                <span>Call +91 7973574376</span>
                 <span>↗</span>
               </a>
             </div>
