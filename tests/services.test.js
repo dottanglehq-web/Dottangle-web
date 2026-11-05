@@ -19,6 +19,38 @@ const server=app.listen(0);await once(server,'listening');const base=`http://loc
 const browser=await chromium.launch({headless:true});
 try {
  await mkdir('test-results',{recursive:true});
+ for (const width of [320,375,390,430,768,1024,1440]) {
+  const page=await browser.newPage({viewport:{width,height:900},reducedMotion:'reduce'});
+  await page.goto(base+'/services');
+  const toggle=page.locator('.sp-category-toggle');
+  const mobile=width<=1024;
+  assert.equal(await toggle.isVisible(),mobile);
+  assert.equal(await page.locator('.sp-category-title').innerText(),serviceCategories[0].name);
+  if(mobile) {
+   assert.equal(await toggle.getAttribute('aria-expanded'),'false');
+   assert.equal(await page.locator('.sp-nav-item').first().isVisible(),false);
+   await toggle.click();
+   await page.keyboard.press('Tab');
+   await page.keyboard.press('Escape');
+   assert.equal(await toggle.getAttribute('aria-expanded'),'false');
+   assert.equal(await toggle.evaluate(el=>el===document.activeElement),true);
+  }
+  for(const cat of serviceCategories) {
+   if(mobile) await toggle.click();
+   const item=page.locator('.sp-nav-item').filter({has:page.getByText(cat.name,{exact:true})});
+   await item.click();
+   assert.equal(await page.locator('.sp-content-area').count(),1);
+   assert.equal(await page.locator('.sp-category-title').innerText(),cat.name);
+   assert.deepEqual(await page.locator('.sp-content-area .sp-card-title').allTextContents(),cat.subServices.map(sub=>sub.title));
+   if(mobile) assert.equal(await toggle.getAttribute('aria-expanded'),'false');
+   const overflow=await page.locator('.sp-explorer-layout').evaluate((el,mobile)=>[el,...el.querySelectorAll('*')].filter(node=>node.getBoundingClientRect().width && (node.getBoundingClientRect().right>innerWidth+1 || node.scrollWidth>node.clientWidth+(mobile ? 1 : 4))).map(node=>({name:node.className,width:node.clientWidth,scroll:node.scrollWidth,right:node.getBoundingClientRect().right,text:node.textContent})),mobile);
+   assert.deepEqual(overflow,[],`${width}px ${cat.name}: clipped explorer content`);
+   assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),`${width}px page overflow`);
+  }
+  await page.screenshot({path:`test-results/service-categories-${width}.png`,animations:'disabled'});
+  await page.close();
+  console.log(`PASS ${width}px: all 16 categories, exact services, dropdown behavior and overflow`);
+ }
  for(const [label,width,height] of [['desktop',1440,1000],['mobile',390,844]]) {
   const page=await browser.newPage({viewport:{width,height},reducedMotion:'reduce'});
   const errors=[];page.on('pageerror',e=>errors.push(e.message));

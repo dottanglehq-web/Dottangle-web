@@ -2,6 +2,7 @@ import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import {
   Search,
+  ChevronDown,
   ArrowRight,
   Sparkles,
   CheckCircle2,
@@ -58,6 +59,8 @@ export default function ServicesPage() {
   });
 
   const [searchQuery, setSearchQuery] = useState('');
+  const [categoriesOpen, setCategoriesOpen] = useState(false);
+  const categoryToggleRef = useRef(null);
   const searchInputRef = useRef(null);
   const clearSearch = () => { setSearchQuery(''); searchInputRef.current?.focus(); };
   const [activeTechTab, setActiveTechTab] = useState('AI & Machine Learning');
@@ -93,6 +96,8 @@ export default function ServicesPage() {
 
   // Smooth category select without page reload or jump
   const handleCategorySelect = (catId, shouldScroll = false) => {
+    setCategoriesOpen(false);
+    if (categoriesOpen) categoryToggleRef.current?.focus();
     if (catId === activeCategoryId && !searchQuery) {
       if (shouldScroll) {
         document.getElementById('service-explorer')?.scrollIntoView({ behavior: 'smooth' });
@@ -160,8 +165,27 @@ export default function ServicesPage() {
                   )}
                 </div>
 
-                <nav className="sp-sidebar-nav" aria-label="Service categories navigation">
-                  {visibleCategories.map((cat) => {
+                <button
+                  ref={categoryToggleRef}
+                  type="button"
+                  className="sp-category-toggle"
+                  aria-expanded={categoriesOpen}
+                  aria-controls="service-category-list"
+                  onClick={() => setCategoriesOpen(open => !open)}
+                >
+                  <CategoryIcon name={activeCategory.iconName} size={20} />
+                  <span>{activeCategory.name}</span>
+                  <ChevronDown size={20} className="sp-category-chevron" />
+                </button>
+                <div className={`sp-category-list ${categoriesOpen ? 'is-open' : ''}`}
+                  onKeyDown={event => {
+                    if (event.key === 'Escape') {
+                      setCategoriesOpen(false);
+                      categoryToggleRef.current?.focus();
+                    }
+                  }}>
+                <nav id="service-category-list" className="sp-sidebar-nav" aria-label="Service categories navigation">
+                  {serviceCategories.map((cat) => {
                     const isActive = activeCategoryId === cat.id;
                     return (
                       <button
@@ -169,6 +193,8 @@ export default function ServicesPage() {
                         className={`sp-nav-item ${isActive ? 'is-active' : ''}`}
                         onClick={() => handleCategorySelect(cat.id)}
                         type="button"
+                        aria-current={isActive ? 'true' : undefined}
+                        data-search-match={visibleCategories.includes(cat)}
                       >
                         <div className="sp-nav-icon">
                           <CategoryIcon name={cat.iconName} size={18} />
@@ -183,6 +209,7 @@ export default function ServicesPage() {
                     );
                   })}
                 </nav>
+                </div>
               </aside>
             {searchResults !== null ? (
             <div className="sp-search-results-view">
