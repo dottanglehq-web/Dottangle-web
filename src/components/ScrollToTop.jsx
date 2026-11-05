@@ -6,9 +6,10 @@ export default function ScrollToTop() {
   const prevPathRef = useRef(pathname);
 
   useEffect(() => {
-    // Prevent scrolling to top when exploring sub-routes within /services
-    const isServiceInternalRoute =
-      pathname.startsWith('/services') && prevPathRef.current.startsWith('/services');
+    // Keep context when opening/closing a sub-service modal, but reset for category pages.
+    const serviceCategory = path => path.match(/^\/services\/([^/]+)/)?.[1];
+    const isServiceInternalRoute = serviceCategory(pathname) &&
+      serviceCategory(pathname) === serviceCategory(prevPathRef.current);
 
     if (!isServiceInternalRoute) {
       window.scrollTo({ top: 0, left: 0, behavior: 'instant' });

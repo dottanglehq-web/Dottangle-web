@@ -1172,10 +1172,15 @@ a {
 }
 
 @media (max-width: 480px) {
+  :root {
+    --mobile-nav-top: 6px;
+    --mobile-nav-height: 60px;
+  }
+
   .site-header {
     width: calc(100% - 16px) !important;
-    top: 8px !important;
-    height: 60px !important;
+    top: var(--mobile-nav-top) !important;
+    height: var(--mobile-nav-height) !important;
     padding: 0 10px 0 20px !important;
     border-radius: 9999px !important;
   }

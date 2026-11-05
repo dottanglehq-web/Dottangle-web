@@ -6,13 +6,14 @@
   "scripts": {
     "dev": "vite",
     "server": "node server/server.js",
-    "build": "vite build",
+    "build": "vite build && node scripts/prerender-services.mjs",
     "preview": "vite preview",
     "test": "node --test server/contact.test.js server/serverless.test.js",
     "smtp:verify": "node server/verify-smtp.js",
     "test:browser": "npm run build && node server/browser.test.js",
     "test:services": "npm run build && node tests/services.test.js",
-    "test:phone": "npm run build && node tests/phone.test.js"
+    "test:phone": "npm run build && node tests/phone.test.js",
+    "test:hero": "npm run build && node tests/home-hero.test.js"
   },
   "devDependencies": {
     "@playwright/test": "^1.64.1",

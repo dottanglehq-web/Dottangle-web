@@ -781,6 +781,67 @@
   }
 }
 
+/* Phone-only clearance for the fixed 60px navigation bar. */
+@media (max-width: 480px) {
+  .cb-hero-section {
+    padding-top: calc(var(--mobile-nav-top, 6px) + var(--mobile-nav-height, 60px) + 54px);
+  }
+
+  .cb-banner-wrapper {
+    margin-bottom: 68px;
+  }
+
+  /* Keep the original alternating arrangement while ensuring every role is visible. */
+  .cb-role-designer,
+  .cb-role-marketer,
+  .cb-role-investor {
+    display: inline-flex;
+  }
+
+  .cb-role-strategist {
+    top: auto;
+    bottom: -36px;
+    left: 0;
+    right: auto;
+  }
+
+  .cb-role-manager {
+    top: -32px;
+    bottom: auto;
+    left: 18%;
+    right: auto;
+    margin-left: -110px;
+  }
+
+  .cb-role-designer {
+    top: auto;
+    bottom: -36px;
+    left: 32%;
+    right: auto;
+  }
+
+  .cb-role-developer {
+    top: -30px;
+    bottom: auto;
+    left: 50%;
+    right: auto;
+  }
+
+  .cb-role-marketer {
+    top: auto;
+    bottom: -36px;
+    left: 68%;
+    right: auto;
+  }
+
+  .cb-role-investor {
+    top: -32px;
+    bottom: auto;
+    left: auto;
+    right: -75px;
+  }
+}
+
 /* --------------------------------------------------------------------------
    Daylight Ambient Pastel Orbs & Entrance Keyframes
    -------------------------------------------------------------------------- */

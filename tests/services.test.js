@@ -1,106 +1,116 @@
 import assert from 'node:assert/strict';
 import express from 'express';
 import { once } from 'node:events';
-import { chromium } from '@playwright/test';
-import { mkdir } from 'node:fs/promises';
+import { chromium, expect } from '@playwright/test';
+import { mkdir, readFile } from 'node:fs/promises';
 import { serviceCategories } from '../src/data/servicesCatalog.js';
+import { categoryPageContent } from '../src/data/categoryPageContent.js';
+import { subServiceBenefit } from '../src/data/serviceCardContent.js';
 import { searchServices } from '../src/data/serviceSearch.js';
-const expected = new Map([['SEO','SEO Optimization'],['sco','SEO Optimization'],['  SeO  ','SEO Optimization'],['WhatsApp','WhatsApp Integration'],['AI','AI Integration'],['Custom','Custom Software Development'],['Software','Custom Software Development'],['Custom Software Development','Custom Software Development'],['Google Ranking','SEO Optimization'],['LLM','AI Integration'],['Business Messaging','WhatsApp Integration']]);
+
 assert.equal(serviceCategories.length,16);
-assert.equal(new Set(serviceCategories.map(c=>c.id)).size,serviceCategories.length);
-for (const [query,title] of expected) assert.ok(searchServices(serviceCategories,query).some(s=>s.title===title),`${query}: ${title}`);
-for (const cat of serviceCategories) assert.ok(searchServices(serviceCategories,cat.name).length,cat.name);
-for (const query of ['SEO','AI','Software']) { const rows=searchServices(serviceCategories,query); assert.equal(rows.length,new Set(rows.map(r=>r.id)).size); }
-assert.deepEqual(searchServices(serviceCategories,'nonexistent-zzzz-service'),[]);
-assert.equal(searchServices(serviceCategories,'   '),null);
-console.log('PASS catalog: 16 unique categories, existing categories searchable, keywords, aliases and deduplicated results');
-const app=express();app.use(express.static('dist'));app.get('/{*path}',(req,res)=>res.sendFile('index.html',{root:'dist'}));
-const server=app.listen(0);await once(server,'listening');const base=`http://localhost:${server.address().port}`;
+assert.equal(new Set(serviceCategories.map(cat=>cat.id)).size,16);
+for(const cat of serviceCategories) {
+ const content=categoryPageContent[cat.id];
+ assert.ok(content.overview && content.audience);
+ assert.equal(content.process.length,6);
+ assert.ok(content.faqs.length>=4 && content.faqs.length<=6);
+ assert.ok(content.tools.length && content.outcomes.length);
+ const html=await readFile(`dist/services/${cat.id}/index.html`,'utf8');
+ assert.ok(html.includes(`<title>${cat.name.replaceAll('&','&amp;')} | Dottangle</title>`));
+ assert.ok(html.includes(`rel="canonical" href="https://dottangle.vercel.app/services/${cat.id}"`));
+ for(const sub of cat.subServices) assert.ok(html.includes(sub.title.replaceAll('&','&amp;').replaceAll('"','&quot;').replaceAll("'",'&#x27;')),`prerender missing ${sub.title}`);
+ assert.ok(searchServices(serviceCategories,cat.name).length);
+ for(const sub of cat.subServices) assert.ok(subServiceBenefit(sub),`Missing business application: ${sub.id}`);
+}
+assert.equal(new Set(Object.values(categoryPageContent).map(content=>JSON.stringify(content.faqs))).size,16);
+assert.ok((await readFile('dist/sitemap.xml','utf8')).includes('/services/ai-development'));
+console.log('PASS catalog, all 16 editorial profiles, prerendered service content, metadata and sitemap');
+const app=express();
+// Serve the generated pages at their canonical URLs, as well as the SPA fallback.
+app.get(['/services',...serviceCategories.map(cat=>`/services/${cat.id}`)],(req,res)=>res.sendFile(`${req.path}/index.html`,{root:'dist'}));
+app.use(express.static('dist',{redirect:false}));
+app.get('/{*path}',(req,res)=>res.sendFile('index.html',{root:'dist'}));
+const server=app.listen(0); await once(server,'listening'); const base=`http://localhost:${server.address().port}`;
 const browser=await chromium.launch({headless:true});
 try {
  await mkdir('test-results',{recursive:true});
- for (const width of [320,375,390,430,768,1024,1440]) {
+ for(const width of [320,375,390,430,768,1024,1440]) {
   const page=await browser.newPage({viewport:{width,height:900},reducedMotion:'reduce'});
+  const errors=[]; page.on('pageerror',error=>errors.push(error.message));
   await page.goto(base+'/services');
-  const toggle=page.locator('.sp-category-toggle');
-  const mobile=width<=1024;
-  const dropdown=width>640 && mobile;
-  assert.equal(await toggle.isVisible(),dropdown);
-  assert.equal(await page.locator(".sp-content-area").isVisible(),width>640);
-  if(width<=640) {
-   assert.equal(await page.locator(".sp-nav-item:visible").count(),16);
-   assert.equal(await page.locator(".sp-sidebar-nav").evaluate(el=>el.scrollHeight<=el.clientHeight+1),true);
-  }
-  assert.equal(await page.locator('.sp-category-title').innerText(),serviceCategories[0].name);
-  if(dropdown) {
-   assert.equal(await toggle.getAttribute('aria-expanded'),'false');
-   assert.equal(await page.locator('.sp-nav-item').first().isVisible(),false);
-   await toggle.click();
-   await page.keyboard.press('Tab');
-   await page.keyboard.press('Escape');
-   assert.equal(await toggle.getAttribute('aria-expanded'),'false');
-   assert.equal(await toggle.evaluate(el=>el===document.activeElement),true);
-  }
+  await expect(page.locator('.svc-category-card')).toHaveCount(16);
+  await expect(page.locator('h1')).toHaveText('Explore Our Services');
+  assert.equal(await page.locator('.svc-sub-card, .sp-content-area, .sp-category-toggle, dialog').count(),0);
+  await page.evaluate(()=>window.serviceNavigationMarker='client-side');
+  const checkOverflow=async()=>{
+   assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),`${width}px horizontal page overflow`);
+   const overflow=await page.locator('.svc-page').evaluate(root=>[root,...root.querySelectorAll('*')].filter(node=>node.getBoundingClientRect().width && (node.getBoundingClientRect().right>innerWidth+1 || node.scrollWidth>node.clientWidth+1)).map(node=>node.className));
+   assert.deepEqual(overflow,[],`${width}px clipped service content`);
+  };
+  await checkOverflow();
+  if(width===390 || width===1440) await page.screenshot({path:`test-results/services-directory-${width}.png`,fullPage:true});
   for(const cat of serviceCategories) {
-   if(dropdown) await toggle.click();
-   const item=page.locator('.sp-nav-item').filter({has:page.getByText(cat.name,{exact:true})});
-   await item.click();
-   assert.equal(await page.locator('.sp-content-area').count(),1);
-   assert.equal(await page.locator('.sp-category-title').innerText(),cat.name);
-   assert.deepEqual(await page.locator('.sp-content-area .sp-card-title').allTextContents(),cat.subServices.map(sub=>sub.title));
-   if(dropdown) assert.equal(await toggle.getAttribute('aria-expanded'),'false');
-   if(width<=640) assert.equal(await page.locator('.sp-nav-item:visible').count(),16);
-   assert.equal(await page.locator('.sp-content-area').isVisible(),true);
-   const overflow=await page.locator('.sp-explorer-layout').evaluate((el,mobile)=>[el,...el.querySelectorAll('*')].filter(node=>node.getBoundingClientRect().width && (node.getBoundingClientRect().right>innerWidth+1 || node.scrollWidth>node.clientWidth+(mobile ? 1 : 4))).map(node=>({name:node.className,width:node.clientWidth,scroll:node.scrollWidth,right:node.getBoundingClientRect().right,text:node.textContent})),mobile);
-   assert.deepEqual(overflow,[],`${width}px ${cat.name}: clipped explorer content`);
-   assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),`${width}px page overflow`);
+   await page.locator('.svc-category-card').filter({has:page.getByRole('heading',{name:cat.name,exact:true})}).click();
+   await expect(page).toHaveURL(base+'/services/'+cat.id);
+   await expect(page.locator('h1')).toHaveText(cat.name);
+   await expect(page.locator('.svc-sub-card')).toHaveCount(cat.subServices.length);
+   assert.deepEqual(await page.locator('.svc-sub-card h3').allTextContents(),cat.subServices.map(sub=>sub.title));
+   assert.equal(await page.locator('.svc-directory-grid').count(),0);
+   await page.waitForFunction(()=>scrollY===0);
+   assert.equal(await page.evaluate(()=>window.serviceNavigationMarker),'client-side','navigation reloaded document');
+   await expect(page).toHaveTitle(`${cat.name} | Dottangle`);
+   assert.equal(await page.locator('link[rel="canonical"]').getAttribute('href'),'https://dottangle.vercel.app/services/'+cat.id);
+   assert.equal(await page.locator('script[data-services-schema]').count(),1);
+   assert.equal(await page.locator('.svc-faqs details').count(),4);
+   assert.equal(await page.locator('.svc-tools li').count(),categoryPageContent[cat.id].tools.length);
+   assert.equal(await page.locator('.svc-actions a[href^="/contact"]').count(),4);
+   await checkOverflow();
+   if(cat.id==='ai-development' && (width===390 || width===1440)) await page.screenshot({path:`test-results/services-ai-${width}.png`,fullPage:true});
+   await page.getByRole('link',{name:'Back to All Services',exact:true}).click();
+   await expect(page.locator('.svc-category-card')).toHaveCount(16);
   }
-  await page.screenshot({path:`test-results/service-categories-${width}.png`,animations:'disabled'});
-  await page.close();
-  console.log(`PASS ${width}px: all 16 categories, exact services, responsive navigation and overflow`);
- }
- for(const [label,width,height] of [['desktop',1440,1000],['mobile',390,844]]) {
-  const page=await browser.newPage({viewport:{width,height},reducedMotion:'reduce'});
-  const errors=[];page.on('pageerror',e=>errors.push(e.message));
-  await page.goto(base+'/services');
-  const input=page.getByRole('textbox',{name:'Search services'});
-  await input.evaluate(el=>window.originalSearchInput=el);
-  assert.equal(await page.locator('.sp-cat-counter').innerText(),`${serviceCategories.length} Categories`);
-  for(const character of 'SEO') {
-   await input.pressSequentially(character);
-   assert.equal(await input.evaluate(el=>document.activeElement===el && window.originalSearchInput===el),true,'input remounted or lost focus');
-  }
-  assert.equal(await input.inputValue(),'SEO');
-  for(const [query,title] of expected) {
-   await input.fill(query);
-   await page.locator('.sp-search-results-view .sp-card-title').getByText(title,{exact:true}).waitFor();
-   assert.equal(await input.evaluate(el=>window.originalSearchInput===el),true);
-  }
-  await input.fill('nonexistent-zzzz-service');await page.getByText(/No services found for/).waitFor();
-  await page.getByRole('button',{name:'Clear search',exact:true}).click();
-  assert.equal(await input.inputValue(),'');assert.equal(await input.evaluate(el=>document.activeElement===el),true);
-  assert.equal(await page.locator('.sp-nav-item').count(),serviceCategories.length);
-  await input.pressSequentially('sco');
-  await page.screenshot({path:`test-results/service-search-${label}.png`,fullPage:false,animations:'disabled'});
-  assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'horizontal page overflow');
-  await page.locator('.sp-search-results-view .sp-service-card').filter({has:page.getByRole('heading',{name:'SEO Optimization',exact:true})}).click();
-  await page.getByRole('dialog').waitFor();await page.getByText('Core Web Vitals optimization',{exact:true}).waitFor();
-  await page.getByRole('button',{name:'Close modal'}).click();
-  await page.goto(base+'/services/whatsapp-integration');
-  await page.getByRole('heading',{name:'WhatsApp Integration',exact:true,level:2}).waitFor();
-  await page.locator('.sp-service-card').getByRole('heading',{name:'WhatsApp Integration',exact:true}).click();
-  await page.getByText('Contact form notifications',{exact:true}).waitFor();
-  await page.keyboard.press('Escape');
-  for (const cat of serviceCategories.slice(-4)) {
-   await page.goto(base+'/services/'+cat.id);
-   await page.locator('.sp-service-card').first().click();
-   const dialog = page.getByRole('dialog');
-   for (const scope of cat.subServices[0].deliverables) await dialog.getByText(scope, {exact:true}).waitFor();
-   await page.keyboard.press('Escape');
-  }
-  // Existing category and sub-service URLs still resolve.
-  await page.goto(base+'/services/ai-development/ai-integration');await page.getByRole('dialog').waitFor();await page.getByRole('dialog').getByRole('heading',{name:'AI Integration',exact:true}).waitFor();
   assert.deepEqual(errors,[]);
-  await page.close();console.log(`PASS ${label}: uninterrupted typing, all queries, clear/focus, no results, count, scopes and deep links`);
+  await page.close(); console.log(`PASS ${width}px: all 16 category links, exact sub-services, client navigation, scroll reset, metadata and no overflow`);
  }
-} finally {await browser.close();await new Promise(resolve=>server.close(resolve));}
+ const page=await browser.newPage({viewport:{width:390,height:844},reducedMotion:'reduce'});
+ await page.goto(base+'/services');
+ const input=page.getByRole('searchbox',{name:'Search services'});
+ for(const query of ['SEO','sco','AI','WhatsApp','Software','Google Ranking']) {
+  await input.fill(query);
+  await expect(page.locator('.svc-category-card').first()).toBeVisible();
+  assert.equal(await page.locator('.svc-sub-card').count(),0);
+ }
+ await input.fill('nonexistent-zzzz-service');await expect(page.getByRole('status')).toContainText('No services found');
+ await page.getByRole('button',{name:'Clear search'}).click();await expect(input).toBeFocused();await expect(page.locator('.svc-category-card')).toHaveCount(16);
+ for(const cat of serviceCategories) {
+  await page.goto(base+'/services/'+cat.id);await expect(page.locator('h1')).toHaveText(cat.name);
+  await page.reload();await expect(page.locator('h1')).toHaveText(cat.name);
+  await page.locator('.svc-sub-card .svc-text-link').first().click();
+  await expect(page.getByRole('dialog')).toBeVisible();
+  await expect(page.getByRole('dialog').getByRole('heading',{name:cat.subServices[0].title,exact:true})).toBeVisible();
+  for(const item of cat.subServices[0].deliverables || []) await expect(page.getByRole('dialog').getByText(item,{exact:true})).toBeVisible();
+  await page.reload();await expect(page.getByRole('dialog')).toBeVisible();
+  await page.keyboard.press('Escape');await expect(page.getByRole('dialog')).toHaveCount(0);
+  await expect(page).toHaveURL(base+'/services/'+cat.id);
+ }
+ await page.goto(base+'/services/ai-development');
+ await page.getByRole('link',{name:'Back to All Services',exact:true}).click();
+ await page.goBack();await expect(page.locator('h1')).toHaveText(serviceCategories[0].name);
+ await page.goForward();await expect(page.locator('h1')).toHaveText('Explore Our Services');
+ await page.goto(base+'/services/website-development');await expect(page).toHaveURL(base+'/services/web-development');
+ await page.goto(base+'/services?category=cloud-devops');await expect(page).toHaveURL(base+'/services/cloud-devops');
+ for(const path of ['/services/not-a-category','/services/web-development/not-a-service','/services/web-development/not/a/service']) {
+  await page.goto(base+path);await expect(page.locator('h1')).toHaveText('We couldn’t find that service.');
+  await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content','noindex, follow');
+ }
+ await page.goto(base+'/services/web-development');
+ await page.getByRole('link',{name:'Start Your Project',exact:true}).click();await expect(page).toHaveURL(/\/contact\?service=/);
+ await expect(page.getByRole('heading',{level:1})).toContainText('Contact Our Team');
+ console.log('PASS search, direct loads, refresh, every category modal, deliverables, history, aliases, invalid URLs and inquiry navigation');
+ await page.close();
+ const staticPage=await browser.newPage({javaScriptEnabled:false});
+ await staticPage.goto(base+'/services');await expect(staticPage.locator('.svc-category-card')).toHaveCount(16);
+ await staticPage.goto(base+'/services/ai-development');await expect(staticPage.locator('h1')).toHaveText(serviceCategories[0].name);await expect(staticPage.locator('.svc-sub-card')).toHaveCount(22);
+ await staticPage.close();console.log('PASS directory links and category content readable without JavaScript');
+} finally { await browser.close(); await new Promise(resolve=>server.close(resolve)); }

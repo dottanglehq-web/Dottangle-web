@@ -8,6 +8,7 @@ import Footer from './components/Footer';
 
 import HomePage from './pages/HomePage';
 import ServicesPage from './pages/ServicesPage';
+import ServiceCategoryPage from './pages/ServiceCategoryPage';
 import WorkPage from './pages/WorkPage';
 import ProcessPage from './pages/ProcessPage';
 import PricingPage from './pages/PricingPage';
@@ -38,7 +39,10 @@ export default function App() {
       <main id="main-content">
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/services/*" element={<ServicesPage />} />
+          <Route path="/services" element={<ServicesPage />} />
+          <Route path="/services/:categorySlug" element={<ServiceCategoryPage />} />
+          <Route path="/services/:categorySlug/:serviceSlug" element={<ServiceCategoryPage />} />
+          <Route path="/services/*" element={<ServiceCategoryPage />} />
           <Route path="/work" element={<WorkPage />} />
           <Route path="/process" element={<ProcessPage />} />
           <Route path="/pricing" element={<PricingPage />} />
