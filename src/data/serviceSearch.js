@@ -3,8 +3,20 @@ export const normalizeSearch = value => value.trim().toLowerCase().replace(/\s+/
 export function searchServices(categories, query) {
   const normalized = normalizeSearch(query);
   if (!normalized) return null;
-  // Common misspelling explicitly supported by the service catalog.
-  const q = normalized === 'sco' ? 'seo' : normalized;
+  // Common misspellings and business aliases explicitly supported
+  const synonyms = {
+    'sco': 'seo',
+    'pvt ltd': 'private limited',
+    'pvt': 'private limited',
+    'ltd': 'limited',
+    'tm': 'trademark',
+    'ecom': 'ecommerce',
+    'itr': 'income tax',
+    'iec': 'import export',
+    'food licence': 'fssai',
+    'food license': 'fssai'
+  };
+  const q = synonyms[normalized] || normalized;
   const matches = new Map();
   for (const cat of categories) {
     const categoryText = [cat.name, cat.shortName, cat.description, cat.tagline, ...(cat.keywords || [])].join(' ').toLowerCase();

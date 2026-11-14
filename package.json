@@ -8,7 +8,7 @@
     "server": "node server/server.js",
     "build": "vite build",
     "preview": "vite preview",
-    "test": "node --test server/contact.test.js server/serverless.test.js",
+    "test": "node --test server/contact.test.js server/serverless.test.js server/platform.test.js",
     "smtp:verify": "node server/verify-smtp.js",
     "test:browser": "npm run build && node server/browser.test.js",
     "test:services": "npm run build && node tests/services.test.js",

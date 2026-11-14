@@ -4,6 +4,7 @@ import rateLimit from 'express-rate-limit';
 import Inquiry from './models/Inquiry.js';
 import Newsletter from './models/Newsletter.js';
 import { isAllowedOrigin } from './origins.js';
+import { createPlatformRouter } from './platform/apiRoutes.js';
 export function validateInquiry(body) {
   if (!body || typeof body !== 'object' || Array.isArray(body)) throw new Error('Invalid form.');
   const clean = (key, max, min = 0) => {
@@ -56,6 +57,7 @@ export function createApp({ Model = Inquiry, ready = () => true, env = process.e
     try { await Newsletter.updateOne({ email }, { $setOnInsert: { email } }, { upsert: true }); res.status(201).json({ success: true }); }
     catch { res.status(503).json({ error: 'Subscription temporarily unavailable.' }); }
   });
+  app.use('/api', createPlatformRouter());
   // No public endpoint exposes customer records.
   app.use((err,req,res,next) => res.status(err.status === 413 ? 413 : 400).json({ error: 'Unable to process this request.' }));
   return app;

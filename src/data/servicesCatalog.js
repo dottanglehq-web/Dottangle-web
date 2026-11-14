@@ -16,6 +16,8 @@
  * L. Offshore Development & Staff Augmentation
  */
 
+import { businessCategories } from './businessServicesData.js';
+
 export const serviceCategories = [
   {
     id: 'ai-development',
@@ -182,6 +184,8 @@ export const serviceCategories = [
       }
     ]
   },
+
+  ...businessCategories,
 
   {
     id: 'zero-to-hero',

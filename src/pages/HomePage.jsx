@@ -3,8 +3,10 @@ import { Link } from 'react-router-dom';
 import HeroSection from '../components/HeroSection';
 import DigitalServicesSection from '../digital/DigitalServicesSection';
 import TrustedBrands from '../components/TrustedBrands';
+import PortfolioSection from '../components/portfolio/PortfolioSection';
 import PortfolioShowcaseSection from '../components/PortfolioShowcaseSection';
 import CustomerReviewsSection from '../components/CustomerReviewsSection';
+import HomeBusinessSections from '../components/home/HomeBusinessSections';
 
 export default function HomePage() {
   const [openFaq, setOpenFaq] = useState(0);
@@ -12,23 +14,31 @@ export default function HomePage() {
   const faqs = [
     {
       q: "What makes Dottangle different from traditional agencies?",
-      a: "Unlike traditional agencies that pass your project through layers of junior account reps, at Dottangle you work directly with senior designers and engineers. We keep our client roster small so every project gets dedicated focus, direct communication, and rapid turnaround."
+      a: "Unlike traditional agencies that pass your project through layers of junior account reps, at Dottangle you work directly with senior designers, engineers, and accredited compliance specialists. We provide an integrated one-stop ecosystem covering business registration, legal filings, eCommerce management, software development, and digital marketing."
+    },
+    {
+      q: "How does Dottangle assist with company incorporation and legal compliance?",
+      a: "We offer end-to-end digital assistance for Private Limited, LLP, OPC, Section 8, and GST registration. We coordinate with certified Chartered Accountants, Company Secretaries, and Advocates to draft MOA/AOA, obtain DSC/DIN, secure MCA name approval, and complete statutory filings without physical paperwork."
+    },
+    {
+      q: "Can you manage our complete Amazon, Flipkart and Shopify operations?",
+      a: "Yes. Inspired by leading eCommerce management benchmarks, we handle marketplace account launch, optimized product cataloging, Enhanced Brand Content (A+ Content), multi-channel inventory sync, PPC advertising, and daily seller health monitoring to scale your monthly GMV."
     },
     {
       q: "How long does a typical project take from start to launch?",
-      a: "Most custom websites and brand identities launch within 4 to 8 weeks. For urgent launches or focused single-page landing platforms, we can deliver a production-ready website in 2 to 3 weeks without cutting corners."
+      a: "Statutory company incorporation typically takes 5 to 10 working days. Marketplace store setup and catalog launch take 7 to 14 days. Custom software platforms and web applications typically launch within 3 to 6 weeks with staging demos."
     },
     {
       q: "Do you use WordPress/templates, or is everything custom coded?",
       a: "Everything is custom crafted and custom coded using modern React and clean CSS. We avoid bloated off-the-shelf templates and heavy plugins. The result is a lightning-fast, secure website that loads in under 1 second and ranks effortlessly on Google."
     },
     {
-      q: "Can you help us with SEO and paid ads after the website goes live?",
-      a: "Absolutely. A great website needs visitors. We handle full-funnel digital marketing: technical Google SEO to bring steady organic leads, and high-converting Meta and Google ad campaigns to scale sales predictably."
+      q: "How do your pricing and government fees work?",
+      a: "We maintain 100% transparent pricing. Professional service fees and government statutory fees (MCA, GST, ROC filings) are clearly itemized with zero hidden fees. You can use our interactive Cost Calculator to view full breakdowns before starting."
     },
     {
       q: "How do we stay in touch and track progress during the build?",
-      a: "We set up a shared Slack or WhatsApp group directly with the team working on your project. You get regular Loom video walkthroughs, live staging links to test on your phone, and quick, direct answers whenever you have a question."
+      a: "You get access to our live application tracking system with a real-time reference code (DOT-2026-XXXX). Additionally, we establish direct WhatsApp/Slack communication with your dedicated account manager and engineering team."
     }
   ];
 
@@ -40,13 +50,19 @@ export default function HomePage() {
       {/* 2. Trusted Brands Section */}
       <TrustedBrands />
 
-      {/* 3. Premier Portfolio & Core Disciplines Showcase (Reference: follishitechsolutions.org) */}
+      {/* 3. Authentic Client Portfolio Showcase ("Our Work Speaks for Itself") */}
+      <PortfolioSection />
+
+      {/* 4. Premier Disciplines Showcase (Reference: follishitechsolutions.org) */}
       <PortfolioShowcaseSection />
 
       {/* 3. Fully interactive smartphone services experience */}
       <DigitalServicesSection />
 
-      {/* 4. Studio Growth & Expertise Overview (Modelled after Reference) */}
+      {/* 4. Comprehensive Business Services, eCommerce (Datics-inspired), Packages & Tools */}
+      <HomeBusinessSections />
+
+      {/* 5. Studio Growth & Expertise Overview (Modelled after Reference) */}
       <section className="section studio-growth-section" id="studio-overview">
         <div className="container">
           <div className="studio-growth-grid">

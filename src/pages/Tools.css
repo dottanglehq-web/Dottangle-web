@@ -1,0 +1,148 @@
+/* ==========================================================================
+   Tools.css - Interactive Business Tools Suite Styles
+   ========================================================================== */
+
+.tools-page {
+  padding-top: calc(var(--header-height) + 40px);
+  padding-bottom: 100px;
+  min-height: 100vh;
+}
+
+.tools-hero {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto 50px;
+}
+
+.tools-nav-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 40px;
+}
+
+.tools-tab-btn {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-pill);
+  padding: 10px 22px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-body);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tools-tab-btn:hover,
+.tools-tab-btn.active {
+  background: var(--coral-500);
+  border-color: var(--coral-500);
+  color: #fff;
+}
+
+/* Calculator Grid */
+.calc-container-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 36px;
+}
+
+@media (max-width: 960px) {
+  .calc-container-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.calc-services-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.calc-service-item {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 20px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.calc-service-item:hover {
+  border-color: rgba(255, 94, 98, 0.3);
+}
+
+.calc-service-item.selected {
+  border-color: var(--coral-500);
+  background: rgba(255, 94, 98, 0.05);
+}
+
+.calc-summary-panel {
+  background: var(--bg-card);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-xl);
+  padding: 32px;
+  position: sticky;
+  top: 120px;
+}
+
+.calc-summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  font-size: 0.92rem;
+  color: var(--text-body);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.calc-total-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 20px 0;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--text-main);
+}
+
+.calc-total-val {
+  font-size: 2rem;
+  color: var(--coral-400);
+}
+
+/* Checklist Tool */
+.checklist-item {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 12px;
+  cursor: pointer;
+}
+
+.checklist-item.checked {
+  border-color: #10B981;
+  background: rgba(16, 185, 129, 0.04);
+}
+
+/* Tracker Box */
+.tracker-box {
+  max-width: 640px;
+  margin: 0 auto;
+  background: var(--bg-card);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-xl);
+  padding: 36px 32px;
+}
+

@@ -165,6 +165,14 @@ export default function ServiceDetailModal({ service, category, onClose }) {
             <span>Average turnaround: <strong>3 to 6 weeks</strong> &bull; Direct Senior Engineer Support</span>
           </div>
           <div className="sd-footer-actions">
+            <Link
+              to={`/service/${service.id}`}
+              className="btn btn-glass"
+              style={{ fontSize: '0.85rem', padding: '10px 16px' }}
+              onClick={onClose}
+            >
+              Full Page & Pricing &rarr;
+            </Link>
             <button className="btn btn-glass" onClick={onClose}>
               Close
             </button>

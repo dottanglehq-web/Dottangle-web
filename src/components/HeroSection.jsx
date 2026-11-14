@@ -5,12 +5,12 @@ export default function HeroSection() {
   return (
     <CodeBrewHero 
       brandName="Dottangle"
-      headline="AI-Driven Digital Transformation Company"
-      subheadline="We empower businesses to Innovate, Optimize, and Scale."
-      primaryCtaText="Build Your Success Story"
-      primaryCtaLink="/contact"
-      secondaryCtaText="Explore Live Demos"
-      secondaryCtaLink="/work"
+      headline="Your Complete Business Growth Partner"
+      subheadline="From business registration and legal compliance to eCommerce, technology and digital marketing — everything your business needs under one roof."
+      primaryCtaText="Explore Our Services"
+      primaryCtaLink="/services"
+      secondaryCtaText="Get Free Consultation"
+      secondaryCtaLink="/contact"
     />
   );
 }

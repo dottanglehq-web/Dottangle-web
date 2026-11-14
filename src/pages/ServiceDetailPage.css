@@ -1,0 +1,380 @@
+/* Dottangel Premium Dedicated Service Detail Page */
+
+.sd-page {
+  padding-top: 100px;
+  padding-bottom: 80px;
+  min-height: 100vh;
+  color: #e2e8f0;
+}
+
+.sd-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* Breadcrumbs */
+.sd-breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: #94a3b8;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.sd-breadcrumbs a {
+  color: #94a3b8;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.sd-breadcrumbs a:hover {
+  color: #ff8c69;
+}
+
+.sd-breadcrumbs .sep {
+  opacity: 0.4;
+}
+
+.sd-breadcrumbs .current {
+  color: #f1f5f9;
+  font-weight: 600;
+}
+
+/* Hero Section */
+.sd-hero-card {
+  padding: 40px;
+  border-radius: 24px;
+  margin-bottom: 40px;
+  position: relative;
+  overflow: hidden;
+}
+
+.sd-hero-badges {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.sd-badge-cat {
+  background: rgba(255, 107, 74, 0.15);
+  color: #ff8c69;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border: 1px solid rgba(255, 107, 74, 0.3);
+}
+
+.sd-badge-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(16, 185, 129, 0.15);
+  color: #34d399;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.sd-hero-title {
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 800;
+  line-height: 1.15;
+  color: #ffffff;
+  margin-bottom: 16px;
+  font-family: 'Syne', sans-serif;
+}
+
+.sd-hero-lead {
+  font-size: 1.15rem;
+  line-height: 1.6;
+  color: #cbd5e1;
+  max-width: 820px;
+  margin-bottom: 28px;
+}
+
+.sd-hero-quick-meta {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 20px;
+}
+
+.sd-meta-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.sd-meta-label {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #94a3b8;
+  margin-bottom: 4px;
+}
+
+.sd-meta-value {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+/* 2-Column Main Layout */
+.sd-main-grid {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 40px;
+  align-items: start;
+}
+
+@media (max-width: 1024px) {
+  .sd-main-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Sections */
+.sd-block {
+  margin-bottom: 48px;
+}
+
+.sd-block-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Syne', sans-serif;
+}
+
+.sd-block-title svg {
+  color: #ff6b4a;
+}
+
+.sd-block-text {
+  font-size: 1.02rem;
+  line-height: 1.7;
+  color: #cbd5e1;
+  margin-bottom: 20px;
+}
+
+/* Deliverables & Benefits Grids */
+.sd-grid-2col {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 14px;
+}
+
+.sd-feature-card {
+  display: flex;
+  gap: 14px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  transition: all 0.2s ease;
+}
+
+.sd-feature-card:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 107, 74, 0.3);
+  transform: translateY(-2px);
+}
+
+.sd-check-icon {
+  color: #10b981;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* Documents & Eligibility Lists */
+.sd-doc-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.sd-doc-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.02);
+  border-left: 3px solid #ff6b4a;
+  border-radius: 0 10px 10px 0;
+  font-size: 0.95rem;
+}
+
+/* Process Timeline (6 Steps) */
+.sd-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: relative;
+  padding-left: 20px;
+}
+
+.sd-timeline::before {
+  content: '';
+  position: absolute;
+  top: 10px;
+  bottom: 10px;
+  left: 6px;
+  width: 2px;
+  background: linear-gradient(180deg, #ff6b4a 0%, rgba(255, 255, 255, 0.1) 100%);
+}
+
+.sd-step-item {
+  position: relative;
+  padding-left: 24px;
+}
+
+.sd-step-dot {
+  position: absolute;
+  left: -20px;
+  top: 4px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #ff6b4a;
+  border: 3px solid #06070B;
+}
+
+.sd-step-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 4px;
+}
+
+.sd-step-desc {
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: #94a3b8;
+}
+
+/* Pricing Sticky Sidebar */
+.sd-sidebar {
+  position: sticky;
+  top: 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.sd-pricing-card {
+  padding: 30px;
+  border-radius: 20px;
+  background: #090B10;
+  border: 1px solid rgba(255, 107, 74, 0.3);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+}
+
+.sd-price-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+}
+
+.sd-price-tag {
+  font-size: 2.4rem;
+  font-weight: 800;
+  color: #ffffff;
+  font-family: 'Syne', sans-serif;
+}
+
+.sd-price-breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 0.9rem;
+  margin-bottom: 24px;
+}
+
+.sd-price-row {
+  display: flex;
+  justify-content: space-between;
+  color: #cbd5e1;
+}
+
+.sd-price-row.total {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #ffffff;
+  border-top: 1px dashed rgba(255, 255, 255, 0.15);
+  padding-top: 12px;
+  margin-top: 4px;
+}
+
+.sd-btn-enquire {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #ff6b4a 0%, #ff8c69 100%);
+  color: #ffffff;
+  font-weight: 700;
+  text-decoration: none;
+  margin-bottom: 12px;
+  transition: all 0.2s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.sd-btn-enquire:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(255, 107, 74, 0.4);
+}
+
+.sd-btn-whatsapp {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
+  background: rgba(37, 211, 102, 0.15);
+  color: #25D366;
+  border: 1px solid rgba(37, 211, 102, 0.3);
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.sd-btn-whatsapp:hover {
+  background: rgba(37, 211, 102, 0.25);
+}
+
+.sd-regulatory-disclaimer {
+  margin-top: 48px;
+  padding: 20px 24px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  font-size: 0.84rem;
+  line-height: 1.6;
+  color: #94a3b8;
+}
+
+.sd-regulatory-disclaimer strong {
+  color: #f1f5f9;
+}
+

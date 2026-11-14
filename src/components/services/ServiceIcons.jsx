@@ -21,10 +21,29 @@ import {
   Cog,
   Compass,
   MessageCircle,
-  Code2
+  Code2,
+  Receipt,
+  ShieldCheck,
+  Scale,
+  FileText,
+  Award,
+  Coins,
+  Store,
+  Briefcase,
+  FileSpreadsheet,
+  Layers,
+  Shield,
+  Search,
+  Sparkles,
+  Bot,
+  Zap,
+  CheckCircle2,
+  Check,
+  Send,
+  Lock
 } from 'lucide-react';
 
-const iconMap = {
+export const iconMap = {
   Cpu,
   Flame,
   Globe,
@@ -46,14 +65,361 @@ const iconMap = {
   Cog,
   Compass,
   MessageCircle,
-  Code2
+  Code2,
+  Receipt,
+  ShieldCheck,
+  Scale,
+  FileText,
+  Award,
+  Coins,
+  Store,
+  Briefcase,
+  FileSpreadsheet,
+  Layers,
+  Shield,
+  Search,
+  Sparkles,
+  Bot,
+  Zap,
+  Lock
 };
+
+/**
+ * Consistent, Vibrant Category Color Palettes & Glow Systems
+ */
+export const CATEGORY_COLOR_THEMES = {
+  'ai-development': {
+    primary: '#8B5CF6',
+    secondary: '#06B6D4',
+    bg: 'linear-gradient(135deg, rgba(139, 92, 246, 0.16), rgba(6, 182, 212, 0.14))',
+    border: 'rgba(139, 92, 246, 0.35)',
+    glow: '0 8px 24px -4px rgba(139, 92, 246, 0.35)',
+    label: 'Flagship AI'
+  },
+  'business-registration': {
+    primary: '#2563EB',
+    secondary: '#4F46E5',
+    bg: 'linear-gradient(135deg, rgba(37, 99, 235, 0.16), rgba(79, 70, 229, 0.14))',
+    border: 'rgba(37, 99, 235, 0.35)',
+    glow: '0 8px 24px -4px rgba(37, 99, 235, 0.35)',
+    label: 'Govt Certified'
+  },
+  'gst-taxation': {
+    primary: '#059669',
+    secondary: '#10B981',
+    bg: 'linear-gradient(135deg, rgba(5, 150, 105, 0.16), rgba(16, 185, 129, 0.14))',
+    border: 'rgba(5, 150, 105, 0.35)',
+    glow: '0 8px 24px -4px rgba(5, 150, 105, 0.35)',
+    label: 'Tax Compliance'
+  },
+  'accounting-financial': {
+    primary: '#D97706',
+    secondary: '#F59E0B',
+    bg: 'linear-gradient(135deg, rgba(217, 119, 6, 0.16), rgba(245, 158, 11, 0.14))',
+    border: 'rgba(217, 119, 6, 0.35)',
+    glow: '0 8px 24px -4px rgba(217, 119, 6, 0.35)',
+    label: 'Financial Health'
+  },
+  'ecommerce-management': {
+    primary: '#E11D48',
+    secondary: '#F43F5E',
+    bg: 'linear-gradient(135deg, rgba(225, 29, 72, 0.16), rgba(244, 63, 94, 0.14))',
+    border: 'rgba(225, 29, 72, 0.35)',
+    glow: '0 8px 24px -4px rgba(225, 29, 72, 0.35)',
+    label: 'Marketplaces & D2C'
+  },
+  'zero-to-hero': {
+    primary: '#EA580C',
+    secondary: '#F97316',
+    bg: 'linear-gradient(135deg, rgba(234, 88, 12, 0.16), rgba(249, 115, 22, 0.14))',
+    border: 'rgba(234, 88, 12, 0.35)',
+    glow: '0 8px 24px -4px rgba(234, 88, 12, 0.35)',
+    label: 'Complete MVP'
+  },
+  'web-development': {
+    primary: '#0284C7',
+    secondary: '#0EA5E9',
+    bg: 'linear-gradient(135deg, rgba(2, 132, 199, 0.16), rgba(14, 165, 233, 0.14))',
+    border: 'rgba(2, 132, 199, 0.35)',
+    glow: '0 8px 24px -4px rgba(2, 132, 199, 0.35)',
+    label: 'Web & Cloud Apps'
+  },
+  'mobile-app-development': {
+    primary: '#6366F1',
+    secondary: '#818CF8',
+    bg: 'linear-gradient(135deg, rgba(99, 102, 241, 0.16), rgba(129, 140, 248, 0.14))',
+    border: 'rgba(99, 102, 241, 0.35)',
+    glow: '0 8px 24px -4px rgba(99, 102, 241, 0.35)',
+    label: 'iOS & Android'
+  },
+  'custom-software': {
+    primary: '#0D9488',
+    secondary: '#14B8A6',
+    bg: 'linear-gradient(135deg, rgba(13, 148, 136, 0.16), rgba(20, 184, 166, 0.14))',
+    border: 'rgba(13, 148, 136, 0.35)',
+    glow: '0 8px 24px -4px rgba(13, 148, 136, 0.35)',
+    label: 'Enterprise SaaS'
+  },
+  'ecommerce-development': {
+    primary: '#9333EA',
+    secondary: '#A855F7',
+    bg: 'linear-gradient(135deg, rgba(147, 51, 234, 0.16), rgba(168, 85, 247, 0.14))',
+    border: 'rgba(147, 51, 234, 0.35)',
+    glow: '0 8px 24px -4px rgba(147, 51, 234, 0.35)',
+    label: 'Shopify & Headless'
+  },
+  'digital-marketing': {
+    primary: '#C026D3',
+    secondary: '#E879F9',
+    bg: 'linear-gradient(135deg, rgba(192, 38, 211, 0.16), rgba(232, 121, 249, 0.14))',
+    border: 'rgba(192, 38, 211, 0.35)',
+    glow: '0 8px 24px -4px rgba(192, 38, 211, 0.35)',
+    label: 'Performance Ads'
+  },
+  'graphic-design': {
+    primary: '#DB2777',
+    secondary: '#F472B6',
+    bg: 'linear-gradient(135deg, rgba(219, 39, 119, 0.16), rgba(244, 114, 182, 0.14))',
+    border: 'rgba(219, 39, 119, 0.35)',
+    glow: '0 8px 24px -4px rgba(219, 39, 119, 0.35)',
+    label: 'Luxury Identity'
+  },
+  'cloud-devops': {
+    primary: '#3B82F6',
+    secondary: '#60A5FA',
+    bg: 'linear-gradient(135deg, rgba(59, 130, 246, 0.16), rgba(96, 165, 250, 0.14))',
+    border: 'rgba(59, 130, 246, 0.35)',
+    glow: '0 8px 24px -4px rgba(59, 130, 246, 0.35)',
+    label: 'AWS & GCP Ops'
+  },
+  'cybersecurity-consulting': {
+    primary: '#DC2626',
+    secondary: '#EF4444',
+    bg: 'linear-gradient(135deg, rgba(220, 38, 38, 0.16), rgba(239, 68, 68, 0.14))',
+    border: 'rgba(220, 38, 38, 0.35)',
+    glow: '0 8px 24px -4px rgba(220, 38, 38, 0.35)',
+    label: 'Security & Audit'
+  },
+  'maintenance-support': {
+    primary: '#65A30D',
+    secondary: '#84CC16',
+    bg: 'linear-gradient(135deg, rgba(101, 163, 13, 0.16), rgba(132, 204, 22, 0.14))',
+    border: 'rgba(101, 163, 13, 0.35)',
+    glow: '0 8px 24px -4px rgba(101, 163, 13, 0.35)',
+    label: '24/7 SLA Support'
+  },
+  'offshore-development': {
+    primary: '#0891B2',
+    secondary: '#06B6D4',
+    bg: 'linear-gradient(135deg, rgba(8, 145, 178, 0.16), rgba(6, 182, 212, 0.14))',
+    border: 'rgba(8, 145, 178, 0.35)',
+    glow: '0 8px 24px -4px rgba(8, 145, 178, 0.35)',
+    label: 'Dedicated Squads'
+  },
+  'seo-optimization': {
+    primary: '#16A34A',
+    secondary: '#22C55E',
+    bg: 'linear-gradient(135deg, rgba(22, 163, 74, 0.16), rgba(34, 197, 94, 0.14))',
+    border: 'rgba(22, 163, 74, 0.35)',
+    glow: '0 8px 24px -4px rgba(22, 163, 74, 0.35)',
+    label: 'Page 1 Rankings'
+  },
+  'whatsapp-integration': {
+    primary: '#25D366',
+    secondary: '#128C7E',
+    bg: 'linear-gradient(135deg, rgba(37, 211, 102, 0.18), rgba(18, 140, 126, 0.15))',
+    border: 'rgba(37, 211, 102, 0.4)',
+    glow: '0 8px 24px -4px rgba(37, 211, 102, 0.4)',
+    label: 'WhatsApp API'
+  },
+  'ai-integration': {
+    primary: '#8B5CF6',
+    secondary: '#3B82F6',
+    bg: 'linear-gradient(135deg, rgba(139, 92, 246, 0.16), rgba(59, 130, 246, 0.14))',
+    border: 'rgba(139, 92, 246, 0.35)',
+    glow: '0 8px 24px -4px rgba(139, 92, 246, 0.35)',
+    label: 'Smart APIs'
+  },
+  'custom-software-development': {
+    primary: '#0D9488',
+    secondary: '#0284C7',
+    bg: 'linear-gradient(135deg, rgba(13, 148, 136, 0.16), rgba(2, 132, 199, 0.14))',
+    border: 'rgba(13, 148, 136, 0.35)',
+    glow: '0 8px 24px -4px rgba(13, 148, 136, 0.35)',
+    label: 'Bespoke Code'
+  }
+};
+
+/**
+ * Returns theme colors for a category id or default fallback
+ */
+export function getCategoryTheme(categoryId) {
+  return CATEGORY_COLOR_THEMES[categoryId] || {
+    primary: '#2563EB',
+    secondary: '#4F46E5',
+    bg: 'linear-gradient(135deg, rgba(37, 99, 235, 0.15), rgba(79, 70, 229, 0.12))',
+    border: 'rgba(37, 99, 235, 0.3)',
+    glow: '0 8px 24px -4px rgba(37, 99, 235, 0.35)',
+    label: 'Specialized'
+  };
+}
+
+/**
+ * Modern, Interactive Colourful Category Icon Badge
+ */
+export function ColorfulCategoryBadge({ categoryId, iconName, size = 26, containerSize = 52, className = '' }) {
+  const theme = getCategoryTheme(categoryId);
+  const IconComponent = iconMap[iconName] || Cpu;
+
+  return (
+    <div
+      className={`colorful-icon-container ${className}`}
+      style={{
+        width: `${containerSize}px`,
+        height: `${containerSize}px`,
+        borderRadius: '16px',
+        background: theme.bg,
+        border: `1.5px solid ${theme.border}`,
+        boxShadow: theme.glow,
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        color: theme.primary,
+        transition: 'all 0.28s cubic-bezier(0.16, 1, 0.3, 1)',
+        position: 'relative',
+        flexShrink: 0
+      }}
+    >
+      <IconComponent size={size} strokeWidth={2.2} />
+    </div>
+  );
+}
+
+/**
+ * Standard Category Icon Resolver for legacy compatibility
+ */
+export function CategoryIcon({ name, categoryId, size = 24, className = '' }) {
+  const IconComponent = iconMap[name] || Cpu;
+  const theme = getCategoryTheme(categoryId);
+  return <IconComponent size={size} className={className} style={{ color: theme.primary }} />;
+}
+
+/**
+ * Authentic Social Media & Platform SVG Icons
+ * Using exact brand colors, gradients, and accessible vectors.
+ */
+export function SocialIcon({ platform, size = 20, className = '' }) {
+  switch (platform?.toLowerCase()) {
+    case 'whatsapp':
+      return (
+        <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className}>
+          <circle cx="12" cy="12" r="11" fill="#25D366" />
+          <path
+            d="M17.5 14.3c-.2-.1-1.3-.6-1.5-.7-.2-.1-.4-.1-.5.1-.2.2-.6.7-.7.9-.1.1-.3.2-.5.1-.2-.1-.9-.3-1.8-1.1-.7-.6-1.1-1.4-1.3-1.6-.1-.2 0-.4.1-.5.1-.1.2-.2.3-.4.1-.1.1-.2.2-.3 0-.1 0-.3-.1-.4s-.5-1.3-.7-1.8c-.2-.5-.4-.4-.5-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.1s.9 2.4 1 2.6c.1.2 1.8 2.8 4.4 3.9 2.6 1.1 2.6.7 3.1.7.5 0 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2-.1-.2-.3-.2-.5-.3z"
+            fill="#FFFFFF"
+          />
+        </svg>
+      );
+
+    case 'instagram':
+      return (
+        <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className}>
+          <defs>
+            <linearGradient id="igGradient" x1="0%" y1="100%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#FD1D1D" />
+              <stop offset="30%" stopColor="#E1306C" />
+              <stop offset="60%" stopColor="#833AB4" />
+              <stop offset="100%" stopColor="#405DE6" />
+            </linearGradient>
+          </defs>
+          <rect x="2" y="2" width="20" height="20" rx="6" fill="url(#igGradient)" />
+          <rect x="5.5" y="5.5" width="13" height="13" rx="3.5" stroke="#FFFFFF" strokeWidth="1.8" fill="none" />
+          <circle cx="12" cy="12" r="3.2" stroke="#FFFFFF" strokeWidth="1.8" fill="none" />
+          <circle cx="15.8" cy="8.2" r="1" fill="#FFFFFF" />
+        </svg>
+      );
+
+    case 'facebook':
+      return (
+        <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className}>
+          <circle cx="12" cy="12" r="11" fill="#1877F2" />
+          <path
+            d="M13.5 19v-6.2h2.1l.3-2.4h-2.4V8.9c0-.7.2-1.2 1.2-1.2h1.3V5.5c-.2 0-1-.1-2-.1-2 0-3.3 1.2-3.3 3.4v1.6H8.6v2.4h2.1V19h2.8z"
+            fill="#FFFFFF"
+          />
+        </svg>
+      );
+
+    case 'linkedin':
+      return (
+        <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className}>
+          <rect x="2" y="2" width="20" height="20" rx="4.5" fill="#0A66C2" />
+          <path
+            d="M7.5 10v7H5.2v-7h2.3zm.1-2.5c0 .7-.5 1.3-1.3 1.3s-1.3-.6-1.3-1.3c0-.7.5-1.3 1.3-1.3.8 0 1.3.6 1.3 1.3zM18.8 17h-2.3v-3.7c0-.9-.3-1.5-1.1-1.5-.6 0-1 .4-1.2.8v4.4H11.9v-7h2.2v1c.3-.5.9-1.2 2.1-1.2 1.5 0 2.6 1 2.6 3.1V17z"
+            fill="#FFFFFF"
+          />
+        </svg>
+      );
+
+    case 'youtube':
+      return (
+        <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className}>
+          <rect x="2" y="4" width="20" height="16" rx="5" fill="#FF0000" />
+          <path d="M10 8.5l5.5 3.5-5.5 3.5V8.5z" fill="#FFFFFF" />
+        </svg>
+      );
+
+    case 'google':
+      return (
+        <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className}>
+          <path
+            d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+            fill="#4285F4"
+          />
+          <path
+            d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+            fill="#34A853"
+          />
+          <path
+            d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"
+            fill="#FBBC05"
+          />
+          <path
+            d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"
+            fill="#EA4335"
+          />
+        </svg>
+      );
+
+    case 'shopify':
+      return (
+        <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className}>
+          <rect x="2" y="2" width="20" height="20" rx="4.5" fill="#95BF47" />
+          <path
+            d="M15.4 7.2l-.7-.2c-.3 0-.5.2-.6.4l-1.5 5.3c-.1.2-.3.3-.5.3s-.4-.1-.5-.3L10.3 8c-.1-.2-.3-.3-.5-.3-.2 0-.4.1-.5.3l-1.3 4.3-.8-2.6c-.1-.3-.3-.5-.6-.5h-.9c-.2 0-.3.2-.3.4l1.6 5.8c.2.6.7 1 1.3 1h5.8c.6 0 1.1-.4 1.3-1l1.7-6.5c.1-.4-.2-.7-.5-.7z"
+            fill="#FFFFFF"
+          />
+        </svg>
+      );
+
+    default:
+      return null;
+  }
+}
 
 /**
  * Recognizable Tech Brand SVG Logos & Dynamic Lucide Icon Resolver
  */
 export function TechLogo({ iconKey, size = 32, className = '' }) {
-  if (iconMap[iconKey]) { const Icon = iconMap[iconKey]; return <Icon size={size} className={className} />; }
+  if (iconMap[iconKey]) {
+    const Icon = iconMap[iconKey];
+    return <Icon size={size} className={className} />;
+  }
+
+  // Check social/platform icons
+  const social = SocialIcon({ platform: iconKey, size, className });
+  if (social) return social;
+
   switch (iconKey) {
     case 'apple':
       return (
@@ -81,91 +447,10 @@ export function TechLogo({ iconKey, size = 32, className = '' }) {
     case 'react':
       return (
         <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className}>
-          <ellipse cx="12" cy="12" rx="11" ry="4.2" stroke="#00D8FF" strokeWidth="1.5" transform="rotate(30 12 12)" />
-          <ellipse cx="12" cy="12" rx="11" ry="4.2" stroke="#00D8FF" strokeWidth="1.5" transform="rotate(90 12 12)" />
-          <ellipse cx="12" cy="12" rx="11" ry="4.2" stroke="#00D8FF" strokeWidth="1.5" transform="rotate(150 12 12)" />
-          <circle cx="12" cy="12" r="2" fill="#00D8FF" />
-        </svg>
-      );
-
-    case 'kotlin':
-      return (
-        <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className}>
-          <path d="M24 24H0V0h24L12 12Z" fill="url(#kotlin-grad)" />
-          <defs>
-            <linearGradient id="kotlin-grad" x1="24" y1="0" x2="0" y2="24" gradientUnits="userSpaceOnUse">
-              <stop stopColor="#E4485D" />
-              <stop offset="0.5" stopColor="#C711E1" />
-              <stop offset="1" stopColor="#7F52FF" />
-            </linearGradient>
-          </defs>
-        </svg>
-      );
-
-    case 'swift':
-      return (
-        <svg width={size} height={size} viewBox="0 0 24 24" fill="#F05138" className={className}>
-          <path d="M21.9 13.4c-.1.2-.2.4-.3.6-1.5 2.6-3.8 4.7-6.5 6.1 4.5-2.2 7.7-6.5 8.1-11.6-.2.4-.4.8-.7 1.2-1.9 2.5-4.4 4.3-7.3 5.4 3-1.6 5.4-4.1 6.9-7.2.2-.4.3-.8.4-1.2C17.4 8.7 10.9 9.3 5.7 13.9c2.3-2 5.1-3.3 8.1-3.8-3.4.7-6.4 2.6-8.5 5.3-1.6 2-2.5 4.4-2.8 7 1.3-.9 2.7-1.6 4.2-2.1C3 22.3 1.1 20 0 17.3c1.7 4 4.8 7 8.8 8.6 3.2 1.3 6.8 1.4 10.1.4 2.8-.8 5.4-2.4 7.4-4.6-1.5-.7-3-1.6-4.4-2.7 0 0 0 0 0 0 .1-.2.2-.4.3-.6.1-.2.2-.4.3-.6z" />
-        </svg>
-      );
-
-    case 'openai':
-      return (
-        <svg width={size} height={size} viewBox="0 0 24 24" fill="#10A37F" className={className}>
-          <path d="M22.28 10.03a6.04 6.04 0 00-.51-4.88 6.13 6.13 0 00-6.43-2.92A6.05 6.05 0 0011.02.7a6.13 6.13 0 00-5.83 4.19 6.05 6.05 0 00-3.99 2.9 6.14 6.14 0 00.7 7.02 6.05 6.05 0 00.5 4.88 6.14 6.14 0 006.44 2.92A6.06 6.06 0 0013 23.3a6.13 6.13 0 005.84-4.2 6.05 6.05 0 003.98-2.9 6.13 6.13 0 00-.54-6.17zM13 21.68a4.57 4.57 0 01-2.91-1.04l.15-.08 4.84-2.79a.77.77 0 00.39-.67v-6.84l2.06 1.19a.06.06 0 01.03.05v5.62A4.58 4.58 0 0113 21.68zm-8.8-4.2a4.58 4.58 0 01-.6-3.05l.15.09 4.84 2.8a.77.77 0 00.77 0l5.93-3.42v2.38a.07.07 0 01-.03.06l-4.87 2.81a4.59 4.59 0 01-6.19-1.67zm-1.1-9.92a4.58 4.58 0 012.31-2l-.15.09-4.84 2.8a.78.78 0 00-.38.67v6.83L2.08 17a.06.06 0 01-.03-.05v-5.62a4.58 4.58 0 012.05-3.77zm14.8 3.5l-5.93-3.42v-2.38a.07.07 0 01.03-.06l4.87-2.81a4.59 4.59 0 016.19 1.67 4.58 4.58 0 01.6 3.05l-.15-.09-4.84-2.8a.77.77 0 00-.77 0zm2.2 6.42l-.15-.09-4.84-2.8a.78.78 0 00-.39 0l-5.92 3.42V14.2a.07.07 0 01.03-.06l4.87-2.81a4.59 4.59 0 016.19 1.67 4.58 4.58 0 01.21 4.47zM9.5 13.72l2.5-1.44 2.5 1.44v2.88l-2.5 1.44-2.5-1.44z" />
-        </svg>
-      );
-
-    case 'claude':
-      return (
-        <svg width={size} height={size} viewBox="0 0 24 24" fill="#D97706" className={className}>
-          <circle cx="12" cy="12" r="10" fill="#F59E0B" opacity="0.2" />
-          <path d="M12 4L13.8 9.5H19.5L14.9 12.9L16.6 18.4L12 15L7.4 18.4L9.1 12.9L4.5 9.5H10.2L12 4Z" fill="#D97706" />
-        </svg>
-      );
-
-    case 'gemini':
-      return (
-        <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className}>
-          <path d="M12 0C12 6.627 6.627 12 0 12c6.627 0 12 5.373 12 12 0-6.627 5.373-12 12-12-6.627 0-12-5.373-12-12Z" fill="url(#gemini-grad)" />
-          <defs>
-            <linearGradient id="gemini-grad" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse">
-              <stop stopColor="#1BA1E2" />
-              <stop offset="0.5" stopColor="#7C3AED" />
-              <stop offset="1" stopColor="#F43F5E" />
-            </linearGradient>
-          </defs>
-        </svg>
-      );
-
-    case 'nextjs':
-      return (
-        <svg width={size} height={size} viewBox="0 0 24 24" fill="#000000" className={className}>
-          <circle cx="12" cy="12" r="11" fill="#000000" />
-          <path d="M14.5 7.5L8.5 16.5H10.5L12 14.2L15.5 16.5H17.5L14.5 7.5Z" fill="#FFFFFF" />
-        </svg>
-      );
-
-    case 'shopify':
-      return (
-        <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className}>
-          <path d="M19.7 6.5s-1.5-.1-1.5-.1-1.2-1.1-1.3-1.3c-.1-.1-.5-.1-.6-.1-.02 0-.5.1-1.1.3-.7-1.7-1.7-3.1-2.9-3.1-.1 0-.3 0-.4.1-1 .3-1.6 1.6-2 3.5-.6.2-1.1.3-1.1.3-.3.1-.3.1-.4.5-.1.3-2.3 18.1-2.3 18.1l11.3 2.1 7.2-1.7s-2.1-18.3-2.1-18.3zm-5.7-2.8c.7.2 1.3 1.4 1.7 2.9l-3.1.9c.3-1.8.9-3.7 1.4-3.8zm-2.1 13.3c-.2.1-.5.1-.7.1-1.2 0-1.8-.8-1.8-1.8 0-1.4 1.1-2.4 2.8-2.5v-.3c0-.7-.4-1-1.1-1-.6 0-1.1.2-1.4.4l-.3-1c.5-.3 1.2-.5 1.9-.5 1.5 0 2.3.8 2.3 2.1v3.7c0 .6.1 1.1.2 1.5l-1.3.2c-.1-.3-.2-.7-.3-.9zm.3-3.2c-.9.1-1.4.5-1.4 1.3 0 .5.3.9.9.9.1 0 .3 0 .5-.1v-2.1z" fill="#95BF47" />
-        </svg>
-      );
-
-    case 'wordpress':
-      return (
-        <svg width={size} height={size} viewBox="0 0 24 24" fill="#0073AA" className={className}>
-          <circle cx="12" cy="12" r="11" fill="#0073AA" />
-          <path d="M4 12c0 3.4 2.1 6.3 5.2 7.5L5.1 8.8C4.4 9.7 4 10.8 4 12zm11.6-.4c0-1-.4-1.7-.7-2.2-.5-.7-.9-1.3-.9-2 0-.7.6-1.5 1.5-1.5.1 0 .1 0 .2.01-1.2-.9-2.5-1.3-3.8-1.3-2.5 0-4.7 1.2-6.1 3.1l4.2 11.5c.2.1.5.1.7.1.9 0 1.5-.1 1.5-.1l-.2-.9s-.5.1-1 .1l1.9-5.7 1.7 4.9c.5-.1.9-.3 1.4-.5l-2.4-6.8zm3.7-3.2c.4 1.1.6 2.3.6 3.6 0 2.5-1.1 4.7-2.9 6.2l2.7-7.8c.1-.7.2-1.3.2-2h-.6zM12 20c-.5 0-1-.1-1.5-.2l-3.4-9.7c-.2-.7-.5-1.3-.7-1.8 1.5-1.6 3.7-2.6 6.2-2.6 2.3 0 4.3.9 5.9 2.3l-4.9 11.9h-1.6z" fill="#FFFFFF" />
-        </svg>
-      );
-
-    case 'aws':
-      return (
-        <svg width={size} height={size} viewBox="0 0 24 24" fill="#FF9900" className={className}>
-          <path d="M6.3 12.3c0-1.8 1.1-2.8 2.9-2.8 1.1 0 2.1.4 2.7.9V8c0-1.7-.9-2.6-2.7-2.6-1 0-2.1.4-2.8.9L5.8 5C6.9 4.3 8.3 4 9.6 4c2.6 0 4.3 1.4 4.3 4.2v6.6h-1.4l-.2-1c-.6.6-1.6 1.2-2.8 1.2-1.9 0-3.2-1.2-3.2-2.7zm5.5-.3v-1.1c-.5-.4-1.2-.6-2-.6-1.1 0-1.7.5-1.7 1.4 0 .9.6 1.4 1.7 1.4.9 0 1.5-.4 2-1.1zM18.8 14.8l-1.3-4.9h-.1l-1.3 4.9h-1.6L12.7 6.4h1.7l1.1 5.3h.1l1.3-5.3h1.3l1.3 5.3h.1l1.1-5.3h1.7l-1.8 8.4h-1.7z" />
-          <path d="M21.7 18.2C18.9 20.3 15.3 21.4 11.7 21.4c-4.9 0-9.6-1.9-13.1-5.2-.2-.2-.2-.4 0-.6.2-.2.5-.1.7.1 3.2 3 7.6 4.7 12.3 4.7 3.4 0 6.7-1 9.4-2.8.3-.2.6-.1.8.1.1.2 0 .5-.1.7zM22.6 16.9l-2.1-.6c-.2-.1-.3-.2-.2-.4.1-.2.2-.2.4-.2l1.6.4.5-1.5c.1-.2.2-.3.4-.2.2.1.3.2.2.4l-.7 2.1c-.1.1-.1.2-.2.2z" fill="#FF9900" />
+          <ellipse cx="12" cy="12" rx="10" ry="4.5" stroke="#61DAFB" strokeWidth="1.5" />
+          <ellipse cx="12" cy="12" rx="10" ry="4.5" stroke="#61DAFB" strokeWidth="1.5" transform="rotate(60 12 12)" />
+          <ellipse cx="12" cy="12" rx="10" ry="4.5" stroke="#61DAFB" strokeWidth="1.5" transform="rotate(120 12 12)" />
+          <circle cx="12" cy="12" r="2" fill="#61DAFB" />
         </svg>
       );
 
@@ -181,13 +466,12 @@ export function TechLogo({ iconKey, size = 32, className = '' }) {
       );
 
     default:
-      // Fallback clean gradient generic badge
       return (
-        <div 
-          style={{ 
-            width: size, 
-            height: size, 
-            borderRadius: '10px', 
+        <div
+          style={{
+            width: size,
+            height: size,
+            borderRadius: '10px',
             background: 'linear-gradient(135deg, #0A2540 0%, #2563EB 100%)',
             display: 'grid',
             placeItems: 'center',
@@ -201,12 +485,4 @@ export function TechLogo({ iconKey, size = 32, className = '' }) {
         </div>
       );
   }
-}
-
-/**
- * Category Icon Resolver using Lucide components
- */
-export function CategoryIcon({ name, size = 20, className = '' }) {
-  const IconComponent = iconMap[name] || Cpu;
-  return <IconComponent size={size} className={className} />;
 }

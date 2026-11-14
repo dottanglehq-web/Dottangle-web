@@ -1,60 +1,78 @@
 import React from 'react';
 
 /**
- * Client Brands — authentic logos from verified client work & institutions.
- * Staggered across two rows so circular emblems and wide wordmarks balance each other.
+ * Authentic Client & Featured Portfolio Brands
+ * Verified logos from live website audits across key agency client verticals.
  */
 const CLIENT_BRANDS_ROW_1 = [
   {
-    id: 'ct-university',
-    name: 'CT University',
-    src: '/brands/ct-university-horizontal.png',
-    className: 'tb-logo-ct-univ',
-  },
-  {
     id: 'apex-vouchers',
     name: 'Apex Vouchers',
-    src: '/brands/apex-vouchers-wordmark.png',
+    src: '/brands/apex-vouchers.png',
     className: 'tb-logo-apex',
   },
   {
-    id: 'g3b-education',
-    name: 'G3B Education',
-    src: '/brands/g3b-logo.png',
-    className: 'tb-logo-g3b',
+    id: 'eternal-sips',
+    name: 'Eternal Sips',
+    src: '/brands/eternal-sips.png',
+    className: 'tb-logo-eternal-sips',
+  },
+  {
+    id: 'rangrezz-boutique',
+    name: 'Rangrezz Boutique',
+    src: '/brands/rangrezz-boutique.png',
+    className: 'tb-logo-rangrezz',
+  },
+  {
+    id: 'balaji-nar-singh-herbals',
+    name: 'Balaji Nar Singh Herbals',
+    src: '/brands/balaji-nar-singh-herbals.png',
+    className: 'tb-logo-balaji',
+  },
+  {
+    id: 'helybely',
+    name: 'HelyBely',
+    src: '/brands/helybely.png',
+    className: 'tb-logo-helybely',
+  },
+  {
+    id: 'techverse',
+    name: 'TechVerse CT University',
+    src: '/brands/techverse.png',
+    className: 'tb-logo-techverse',
   },
   {
     id: 'toscaninis',
-    name: 'Toscaninis',
+    name: "Toscanini's",
     src: '/brands/toscaninis.png',
     className: 'tb-logo-toscaninis',
   },
   {
-    id: 'janetrade',
-    name: 'JaneTrade',
-    src: '/brands/janetrade-wordmark.png',
-    className: 'tb-logo-janetrade',
-  },
-  {
-    id: 'techverse',
-    name: 'TechVerse Club',
-    src: '/brands/techverse.png',
-    className: 'tb-logo-techverse',
+    id: 'waadiya',
+    name: 'Waadiya',
+    src: '/brands/waadiya.png',
+    className: 'tb-logo-waadiya',
   },
 ];
 
 const CLIENT_BRANDS_ROW_2 = [
   {
-    id: 'janetrade-r2',
-    name: 'JaneTrade',
-    src: '/brands/janetrade-wordmark.png',
-    className: 'tb-logo-janetrade',
+    id: 'apex-vouchers-r2',
+    name: 'Apex Vouchers',
+    src: '/brands/apex-vouchers.png',
+    className: 'tb-logo-apex',
   },
   {
-    id: 'techverse-r2',
-    name: 'TechVerse Club',
-    src: '/brands/techverse.png',
-    className: 'tb-logo-techverse',
+    id: 'waadiya-r2',
+    name: 'Waadiya',
+    src: '/brands/waadiya.png',
+    className: 'tb-logo-waadiya',
+  },
+  {
+    id: 'toscaninis-r2',
+    name: "Toscanini's",
+    src: '/brands/toscaninis.png',
+    className: 'tb-logo-toscaninis',
   },
   {
     id: 'ct-university-r2',
@@ -63,22 +81,28 @@ const CLIENT_BRANDS_ROW_2 = [
     className: 'tb-logo-ct-univ',
   },
   {
-    id: 'toscaninis-r2',
-    name: 'Toscaninis',
-    src: '/brands/toscaninis.png',
-    className: 'tb-logo-toscaninis',
+    id: 'helybely-r2',
+    name: 'HelyBely',
+    src: '/brands/helybely.png',
+    className: 'tb-logo-helybely',
   },
   {
-    id: 'apex-vouchers-r2',
-    name: 'Apex Vouchers',
-    src: '/brands/apex-vouchers-wordmark.png',
-    className: 'tb-logo-apex',
+    id: 'eternal-sips-r2',
+    name: 'Eternal Sips',
+    src: '/brands/eternal-sips.png',
+    className: 'tb-logo-eternal-sips',
   },
   {
-    id: 'g3b-education-r2',
-    name: 'G3B Education',
-    src: '/brands/g3b-logo.png',
-    className: 'tb-logo-g3b',
+    id: 'rangrezz-boutique-r2',
+    name: 'Rangrezz Boutique',
+    src: '/brands/rangrezz-boutique.png',
+    className: 'tb-logo-rangrezz',
+  },
+  {
+    id: 'balaji-herbals-r2',
+    name: 'Balaji Nar Singh Herbals',
+    src: '/brands/balaji-nar-singh-herbals.png',
+    className: 'tb-logo-balaji',
   },
 ];
 
@@ -123,7 +147,7 @@ function BrandLogo({ src, name, className = '' }) {
     <div className={`tb-logo-item ${className}`}>
       <img
         src={src}
-        alt={name}
+        alt={`${name} Official Logo`}
         className="tb-logo-img"
         loading="lazy"
         draggable="false"
@@ -168,19 +192,19 @@ function MarqueeRow({ brands, direction = 'ltr', speed = 36 }) {
 
 export default function TrustedBrands() {
   return (
-    <section className="tb-section" id="trusted-brands" aria-label="Trusted Brands & Platforms">
+    <section className="tb-section" id="trusted-brands" aria-label="Selected Projects & Digital Experiences">
       <div className="tb-header">
-        <p className="tb-eyebrow">Selected Clients & Partners</p>
-        <h2 className="tb-heading">Brands we've worked with</h2>
+        <p className="tb-eyebrow">Portfolio & Client Work</p>
+        <h2 className="tb-heading">Selected Projects & Digital Experiences</h2>
         <p className="tb-subheading">
-          Empowering forward-thinking companies, universities, and ventures with high-impact digital solutions.
+          Explore the digital platforms and experiences we've created across different industries.
         </p>
       </div>
 
       {/* Dual Row Marquee for Client Brands */}
       <div className="tb-marquee-showcase">
-        <MarqueeRow brands={CLIENT_BRANDS_ROW_1} direction="ltr" speed={32} />
-        <MarqueeRow brands={CLIENT_BRANDS_ROW_2} direction="rtl" speed={36} />
+        <MarqueeRow brands={CLIENT_BRANDS_ROW_1} direction="ltr" speed={30} />
+        <MarqueeRow brands={CLIENT_BRANDS_ROW_2} direction="rtl" speed={34} />
       </div>
 
       {/* Clearly Separated Freelancing Platforms Section */}
