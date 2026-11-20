@@ -101,55 +101,7 @@ export default function Footer() {
                   aria-label="Chat on WhatsApp"
                 >
                   <SocialIcon platform="whatsapp" size={18} />
-                  <span>WhatsApp (+91 7973574376)</span>
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://www.instagram.com/dottangle/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="footer-social-pill footer-social-ig"
-                  aria-label="Follow on Instagram"
-                >
-                  <SocialIcon platform="instagram" size={18} />
-                  <span>Instagram (@dottangle)</span>
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://www.facebook.com/dottangle"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="footer-social-pill footer-social-fb"
-                  aria-label="Connect on Facebook"
-                >
-                  <SocialIcon platform="facebook" size={18} />
-                  <span>Facebook (Dottangle)</span>
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://www.linkedin.com/company/dottangle"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="footer-social-pill footer-social-li"
-                  aria-label="Connect on LinkedIn"
-                >
-                  <SocialIcon platform="linkedin" size={18} />
-                  <span>LinkedIn (Dottangle)</span>
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://www.youtube.com/@dottangle"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="footer-social-pill footer-social-yt"
-                  aria-label="Subscribe on YouTube"
-                >
-                  <SocialIcon platform="youtube" size={18} />
-                  <span>YouTube Channel</span>
+                  <span>+91 7973574376</span>
                 </a>
               </li>
             </ul>
