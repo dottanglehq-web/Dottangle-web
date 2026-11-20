@@ -9,7 +9,6 @@ import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
 import ServicesPage from './pages/ServicesPage';
 import ServiceDetailPage from './pages/ServiceDetailPage';
-import WorkPage from './pages/WorkPage';
 import ProcessPage from './pages/ProcessPage';
 import PricingPage from './pages/PricingPage';
 import ContactPage from './pages/ContactPage';
@@ -84,7 +83,7 @@ export default function App() {
           {/* Portfolio & Case Studies */}
           <Route path="/portfolio" element={<PortfolioPage />} />
           <Route path="/portfolio/:slug" element={<PortfolioDetailPage />} />
-          <Route path="/work" element={<WorkPage />} />
+          <Route path="/work" element={<PortfolioPage />} />
           <Route path="/case-studies" element={<PortfolioPage />} />
           <Route path="/process" element={<ProcessPage />} />
           <Route path="/pricing" element={<PricingPage />} />
